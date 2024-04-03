@@ -19,13 +19,21 @@ namespace SistemaVBA
         DataTable table = new DataTable();
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+        }
+
+        private void NovaVenda_Load(object sender, EventArgs e)
+        {
+
+
+
             table.Columns.Add("ID", typeof(int));
             table.Columns.Add("Product Name", typeof(string));
             table.Columns.Add("Marca", typeof(string));
             table.Columns.Add("Modelo", typeof(string));
             table.Columns.Add("Preço", typeof(int));
 
-            dataGridView1.DataSource = table;  
+            dataGridView1.DataSource = table;
         }
     }
 }

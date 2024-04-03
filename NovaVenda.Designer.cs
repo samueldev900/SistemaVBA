@@ -49,6 +49,7 @@
             Controls.Add(dataGridView1);
             Name = "NovaVenda";
             Text = "Form1";
+            Load += NovaVenda_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }

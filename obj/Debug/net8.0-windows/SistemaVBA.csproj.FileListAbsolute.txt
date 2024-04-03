@@ -3,7 +3,6 @@ C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\bin\Debug\net8.0-windows\Siste
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\bin\Debug\net8.0-windows\SistemaVBA.runtimeconfig.json
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\bin\Debug\net8.0-windows\SistemaVBA.dll
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\bin\Debug\net8.0-windows\SistemaVBA.pdb
-C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.Form1.resources
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.csproj.GenerateResource.cache
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.AssemblyInfoInputs.cache

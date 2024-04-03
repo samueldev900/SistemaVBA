@@ -4,16 +4,16 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
+
 namespace SistemaVBA
 {
     public partial class cadastrarProduto : Form
     {
-        String connectionString = "Data Source=NomeDoServidor;Initial Catalog=NomeDoBancoDeDados;Integrated Security=True";
         public cadastrarProduto()
         {
             InitializeComponent();
-            var strConnection = "server=localhost;uid=root;database=cadastro";
-            var conexao = new MySqlConnection(strConnection);
+            var strConnection = new Connect();
+            var conexao = new MySqlConnection(strConnection.GetConnectionString());
             try
             {
                 conexao.Open();
@@ -27,6 +27,7 @@ namespace SistemaVBA
             {
                 //conexao.Close();
             }
+            var teste = new Connect();
         }
 
 
