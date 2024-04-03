@@ -30,3 +30,6 @@ C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\bin\Debug\net8.0-windows\runti
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.csproj.AssemblyReference.cache
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.csproj.Up2Date
+C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.cadastrarProduto.resources
+C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.NovaVenda.resources
+C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.TelaPrincipal.resources
