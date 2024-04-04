@@ -42,6 +42,8 @@
             IDtextBox = new TextBox();
             label6 = new Label();
             dataGridView1 = new DataGridView();
+            button2 = new Button();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -163,12 +165,33 @@
             dataGridView1.TabIndex = 13;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
+            // button2
+            // 
+            button2.Location = new Point(306, 468);
+            button2.Name = "button2";
+            button2.Size = new Size(143, 43);
+            button2.TabIndex = 14;
+            button2.Text = "Editar";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(493, 468);
+            button3.Name = "button3";
+            button3.Size = new Size(143, 43);
+            button3.TabIndex = 15;
+            button3.Text = "Deletar";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // cadastrarProduto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Highlight;
-            ClientSize = new Size(949, 441);
+            ClientSize = new Size(949, 541);
+            Controls.Add(button3);
+            Controls.Add(button2);
             Controls.Add(dataGridView1);
             Controls.Add(IDtextBox);
             Controls.Add(label6);
@@ -207,5 +230,7 @@
         private TextBox IDtextBox;
         private Label label6;
         private DataGridView dataGridView1;
+        private Button button2;
+        private Button button3;
     }
 }

@@ -9,11 +9,12 @@ using System.Data;
 
 namespace SistemaVBA
 {
-    
+
 
 
     public partial class cadastrarProduto : Form
     {
+        object idValue;
         public cadastrarProduto()
         {
             InitializeComponent();
@@ -100,12 +101,32 @@ namespace SistemaVBA
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                // Obtém o valor da célula da coluna "ID" da linha clicada
+                idValue = dataGridView1.Rows[e.RowIndex].Cells["ID"].Value;
+
+                // Verifica se o valor é válido e não nulo
+                if (idValue != null)
+                {
+                    // Converte o valor para o tipo desejado (por exemplo, int)
+                    int id = Convert.ToInt32(idValue);
+
+                    // Agora você pode usar o ID capturado conforme necessário
+                    // Por exemplo, exibir em uma caixa de mensagem
+                    MessageBox.Show("ID selecionado: " + id.ToString());
+                }
+            }
 
         }
 
         private void cadastrarProduto_Load(object sender, EventArgs e)
         {
             DataTable table = new DataTable();
+
+            //SELECTION MODE
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
 
             string sqlQuery = "SELECT * FROM produto";
 
@@ -119,13 +140,24 @@ namespace SistemaVBA
                     {
                         adapter.Fill(table);
                         dataGridView1.DataSource = table;
+                        dataGridView1.AllowUserToAddRows = false;
+
                     }
                 }
+
             }
+
         }
+
+
         private void TimerAtualizacao_Tick(object sender, EventArgs e)
         {
             // Implemente o código de atualização dos dados aqui
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string sqlQuery = "DELETE FROM produto WHERE ID =" + idValue;
         }
     }
 }
