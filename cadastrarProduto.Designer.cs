@@ -41,6 +41,8 @@
             label5 = new Label();
             IDtextBox = new TextBox();
             label6 = new Label();
+            dataGridView1 = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -56,7 +58,7 @@
             // 
             button1.Location = new Point(12, 358);
             button1.Name = "button1";
-            button1.Size = new Size(345, 49);
+            button1.Size = new Size(189, 49);
             button1.TabIndex = 1;
             button1.Text = "Cadastrar Produto";
             button1.UseVisualStyleBackColor = true;
@@ -66,14 +68,14 @@
             // 
             ProdutoTextBox.Location = new Point(12, 39);
             ProdutoTextBox.Name = "ProdutoTextBox";
-            ProdutoTextBox.Size = new Size(345, 23);
+            ProdutoTextBox.Size = new Size(189, 23);
             ProdutoTextBox.TabIndex = 2;
             // 
             // MarcaTextBox
             // 
             MarcaTextBox.Location = new Point(12, 83);
             MarcaTextBox.Name = "MarcaTextBox";
-            MarcaTextBox.Size = new Size(345, 23);
+            MarcaTextBox.Size = new Size(189, 23);
             MarcaTextBox.TabIndex = 4;
             MarcaTextBox.TextChanged += textBox2_TextChanged;
             // 
@@ -91,7 +93,7 @@
             // 
             ModeloTextBox.Location = new Point(12, 127);
             ModeloTextBox.Name = "ModeloTextBox";
-            ModeloTextBox.Size = new Size(345, 23);
+            ModeloTextBox.Size = new Size(189, 23);
             ModeloTextBox.TabIndex = 6;
             ModeloTextBox.TextChanged += textBox3_TextChanged;
             // 
@@ -108,7 +110,7 @@
             // 
             costPriceTextBox.Location = new Point(12, 185);
             costPriceTextBox.Name = "costPriceTextBox";
-            costPriceTextBox.Size = new Size(345, 23);
+            costPriceTextBox.Size = new Size(189, 23);
             costPriceTextBox.TabIndex = 8;
             // 
             // label4
@@ -124,7 +126,7 @@
             // 
             finalPricetextBox.Location = new Point(12, 235);
             finalPricetextBox.Name = "finalPricetextBox";
-            finalPricetextBox.Size = new Size(345, 23);
+            finalPricetextBox.Size = new Size(189, 23);
             finalPricetextBox.TabIndex = 10;
             // 
             // label5
@@ -140,7 +142,7 @@
             // 
             IDtextBox.Location = new Point(12, 284);
             IDtextBox.Name = "IDtextBox";
-            IDtextBox.Size = new Size(345, 23);
+            IDtextBox.Size = new Size(189, 23);
             IDtextBox.TabIndex = 12;
             // 
             // label6
@@ -152,12 +154,22 @@
             label6.TabIndex = 11;
             label6.Text = "Código de Barras";
             // 
-            // Form1
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(306, 2);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(641, 427);
+            dataGridView1.TabIndex = 13;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // cadastrarProduto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Highlight;
-            ClientSize = new Size(369, 441);
+            ClientSize = new Size(949, 441);
+            Controls.Add(dataGridView1);
             Controls.Add(IDtextBox);
             Controls.Add(label6);
             Controls.Add(finalPricetextBox);
@@ -171,8 +183,10 @@
             Controls.Add(ProdutoTextBox);
             Controls.Add(button1);
             Controls.Add(label1);
-            Name = "Form1";
+            Name = "cadastrarProduto";
             Text = "SistemaVBA";
+            Load += cadastrarProduto_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -192,5 +206,6 @@
         private Label label5;
         private TextBox IDtextBox;
         private Label label6;
+        private DataGridView dataGridView1;
     }
 }

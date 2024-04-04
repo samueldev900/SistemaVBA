@@ -3,15 +3,29 @@ using System;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Relational;
+using System.Data;
 
 
 namespace SistemaVBA
 {
+    
+
+
     public partial class cadastrarProduto : Form
     {
         public cadastrarProduto()
         {
             InitializeComponent();
+
+            var timerAtualizacao = new System.Windows.Forms.Timer();
+            timerAtualizacao = new System.Windows.Forms.Timer();
+            timerAtualizacao.Interval = 2000; // Defina o intervalo desejado aqui (por exemplo, 5000 = 5 segundos)
+            timerAtualizacao.Tick += cadastrarProduto_Load;
+            timerAtualizacao.Start();
+            Update();
+
+
             var strConnection = new Connect();
             var conexao = new MySqlConnection(strConnection.GetConnectionString());
             try
@@ -27,7 +41,6 @@ namespace SistemaVBA
             {
                 //conexao.Close();
             }
-            var teste = new Connect();
         }
 
 
@@ -85,5 +98,34 @@ namespace SistemaVBA
             // Seu código para lidar com o evento TextChanged de textBox3 aqui
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void cadastrarProduto_Load(object sender, EventArgs e)
+        {
+            DataTable table = new DataTable();
+
+            string sqlQuery = "SELECT * FROM produto";
+
+            var connectionString = "server=localhost;uid=root;database=cadastro";
+
+            using (MySqlConnection conexao = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
+                {
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(comando))
+                    {
+                        adapter.Fill(table);
+                        dataGridView1.DataSource = table;
+                    }
+                }
+            }
+        }
+        private void TimerAtualizacao_Tick(object sender, EventArgs e)
+        {
+            // Implemente o código de atualização dos dados aqui
+        }
     }
 }
