@@ -42,8 +42,8 @@
             IDtextBox = new TextBox();
             label6 = new Label();
             dataGridView1 = new DataGridView();
-            button2 = new Button();
-            button3 = new Button();
+            edit_botton = new Button();
+            delete_button = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -161,28 +161,30 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(306, 2);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
             dataGridView1.Size = new Size(641, 427);
             dataGridView1.TabIndex = 13;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // button2
+            // edit_botton
             // 
-            button2.Location = new Point(306, 468);
-            button2.Name = "button2";
-            button2.Size = new Size(143, 43);
-            button2.TabIndex = 14;
-            button2.Text = "Editar";
-            button2.UseVisualStyleBackColor = true;
+            edit_botton.Location = new Point(306, 468);
+            edit_botton.Name = "edit_botton";
+            edit_botton.Size = new Size(143, 43);
+            edit_botton.TabIndex = 14;
+            edit_botton.Text = "Atualizar";
+            edit_botton.UseVisualStyleBackColor = true;
+            edit_botton.Click += edit_botton_Click;
             // 
-            // button3
+            // delete_button
             // 
-            button3.Location = new Point(493, 468);
-            button3.Name = "button3";
-            button3.Size = new Size(143, 43);
-            button3.TabIndex = 15;
-            button3.Text = "Deletar";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            delete_button.Location = new Point(493, 468);
+            delete_button.Name = "delete_button";
+            delete_button.Size = new Size(143, 43);
+            delete_button.TabIndex = 15;
+            delete_button.Text = "Deletar";
+            delete_button.UseVisualStyleBackColor = true;
+            delete_button.Click += delete_button_Click;
             // 
             // cadastrarProduto
             // 
@@ -190,8 +192,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Highlight;
             ClientSize = new Size(949, 541);
-            Controls.Add(button3);
-            Controls.Add(button2);
+            Controls.Add(delete_button);
+            Controls.Add(edit_botton);
             Controls.Add(dataGridView1);
             Controls.Add(IDtextBox);
             Controls.Add(label6);
@@ -230,7 +232,7 @@
         private TextBox IDtextBox;
         private Label label6;
         private DataGridView dataGridView1;
-        private Button button2;
-        private Button button3;
+        private Button edit_botton;
+        private Button delete_button;
     }
 }

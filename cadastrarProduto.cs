@@ -5,6 +5,12 @@ using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Relational;
 using System.Data;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Mysqlx.Crud;
+using System.Collections.Generic;
+using System.Reflection;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
+using System.Text.RegularExpressions;
 
 
 namespace SistemaVBA
@@ -19,12 +25,12 @@ namespace SistemaVBA
         {
             InitializeComponent();
 
-            var timerAtualizacao = new System.Windows.Forms.Timer();
-            timerAtualizacao = new System.Windows.Forms.Timer();
-            timerAtualizacao.Interval = 2000; // Defina o intervalo desejado aqui (por exemplo, 5000 = 5 segundos)
-            timerAtualizacao.Tick += cadastrarProduto_Load;
-            timerAtualizacao.Start();
-            Update();
+            //var timerAtualizacao = new System.Windows.Forms.Timer();
+            //timerAtualizacao = new System.Windows.Forms.Timer();
+            //timerAtualizacao.Interval = 2000; // Defina o intervalo desejado aqui (por exemplo, 5000 = 5 segundos)
+            //timerAtualizacao.Tick += cadastrarProduto_Load;
+            //timerAtualizacao.Start();
+            //Update();
 
 
             var strConnection = new Connect();
@@ -74,6 +80,12 @@ namespace SistemaVBA
                     {
                         conexao.Open();
                         int linhasAfetadas = comando.ExecuteNonQuery();
+                        ProdutoTextBox.Text = String.Empty;
+                        MarcaTextBox.Text = String.Empty;
+                        ModeloTextBox.Text = String.Empty ;
+                        costPriceTextBox.Text = String.Empty;
+                        finalPricetextBox.Text = String.Empty;
+                        IDtextBox.Text = String.Empty;
                         MessageBox.Show("Inserido com sucesso!");
                     }
                     catch (Exception ex)
@@ -117,6 +129,16 @@ namespace SistemaVBA
                     MessageBox.Show("ID selecionado: " + id.ToString());
                 }
             }
+            int index = e.RowIndex;
+            // Obtenha a referência para a linha selecionada
+            DataGridViewRow row = dataGridView1.Rows[index];
+            // Captura o ID do Produto  ProdutoTextBox.Text = row.Cells[0].Value.ToString();
+            ProdutoTextBox.Text = row.Cells[1].Value.ToString();
+            MarcaTextBox.Text = row.Cells[2].Value.ToString();
+            ModeloTextBox.Text = row.Cells[3].Value.ToString();
+            costPriceTextBox.Text = row.Cells[4].Value.ToString();
+            finalPricetextBox.Text = row.Cells[5].Value.ToString();
+            IDtextBox.Text = row.Cells[6].Value.ToString();
 
         }
 
@@ -155,9 +177,62 @@ namespace SistemaVBA
             // Implemente o código de atualização dos dados aqui
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void delete_button_Click(object sender, EventArgs e)
         {
-            string sqlQuery = "DELETE FROM produto WHERE ID =" + idValue;
+            var strConnection = new Connect();
+            var conexao = new MySqlConnection(strConnection.GetConnectionString());
+            var sqlQuery = "DELETE FROM produto WHERE id =" + idValue;
+            using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
+            {
+                comando.Parameters.AddWithValue("@IdValue", idValue);
+
+                try
+                {
+                    conexao.Open();
+                    int rowsAffected = comando.ExecuteNonQuery();
+                    // Faça o que desejar com a informação sobre as linhas afetadas, se necessário.
+                    MessageBox.Show("Deletado com Sucesso");
+                }
+                catch (Exception ex)
+                {
+                    // Lidar com exceções, se houver.
+                    Console.WriteLine("Erro: " + ex.Message);
+                }
+                finally
+                {
+                    conexao.Close();
+                }
+            }
+
+
+        }
+
+        private void edit_botton_Click(object sender, EventArgs e)
+        {
+            var strConnection = new Connect();
+            var conexao = new MySqlConnection(strConnection.GetConnectionString());
+            var sqlQuery = "UPDATE `cadastro`.`produto` SET `nome` = '" + ProdutoTextBox.Text + "', `marca` = '" + MarcaTextBox.Text + "', `preco_de_custo` = '" + costPriceTextBox.Text + "', `preco_final` = '" + finalPricetextBox.Text + "', `codigo_de_barras` = '" + IDtextBox.Text + "' WHERE id = " + idValue;
+
+            using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
+            {
+                try
+                {
+                    conexao.Open();
+                    int rowsAffected = comando.ExecuteNonQuery();
+                    // Faça o que desejar com a informação sobre as linhas afetadas, se necessário.
+                    MessageBox.Show("Produto atualizado com Sucesso");
+                }
+                catch (Exception ex)
+                {
+                    // Lidar com exceções, se houver.
+                    Console.WriteLine("Erro: " + ex.Message);
+                }
+                finally
+                {
+                    conexao.Close();
+                }
+            }
+
         }
     }
 }
