@@ -84,7 +84,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Font = new Font("Segoe UI", 12F);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "TelaPrincipal";
             Text = "Form2";
             ResumeLayout(false);

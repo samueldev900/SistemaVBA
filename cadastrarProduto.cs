@@ -25,14 +25,6 @@ namespace SistemaVBA
         {
             InitializeComponent();
 
-            //var timerAtualizacao = new System.Windows.Forms.Timer();
-            //timerAtualizacao = new System.Windows.Forms.Timer();
-            //timerAtualizacao.Interval = 2000; // Defina o intervalo desejado aqui (por exemplo, 5000 = 5 segundos)
-            //timerAtualizacao.Tick += cadastrarProduto_Load;
-            //timerAtualizacao.Start();
-            //Update();
-
-
             var strConnection = new Connect();
             var conexao = new MySqlConnection(strConnection.GetConnectionString());
             try
@@ -87,6 +79,7 @@ namespace SistemaVBA
                         finalPricetextBox.Text = String.Empty;
                         IDtextBox.Text = String.Empty;
                         MessageBox.Show("Inserido com sucesso!");
+                        atualizar();
                     }
                     catch (Exception ex)
                     {
@@ -113,10 +106,15 @@ namespace SistemaVBA
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            int index = e.RowIndex;
+            // Obtenha a referência para a linha selecionada
+            DataGridViewRow row = dataGridView1.Rows[index];
+
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
+
                 // Obtém o valor da célula da coluna "ID" da linha clicada
-                idValue = dataGridView1.Rows[e.RowIndex].Cells["ID"].Value;
+                idValue = row.Cells[0].Value.ToString();
 
                 // Verifica se o valor é válido e não nulo
                 if (idValue != null)
@@ -126,13 +124,14 @@ namespace SistemaVBA
 
                     // Agora você pode usar o ID capturado conforme necessário
                     // Por exemplo, exibir em uma caixa de mensagem
-                    MessageBox.Show("ID selecionado: " + id.ToString());
+                    //MessageBox.Show("ID selecionado: " + id.ToString());
                 }
             }
-            int index = e.RowIndex;
-            // Obtenha a referência para a linha selecionada
-            DataGridViewRow row = dataGridView1.Rows[index];
+
             // Captura o ID do Produto  ProdutoTextBox.Text = row.Cells[0].Value.ToString();
+
+
+
             ProdutoTextBox.Text = row.Cells[1].Value.ToString();
             MarcaTextBox.Text = row.Cells[2].Value.ToString();
             ModeloTextBox.Text = row.Cells[3].Value.ToString();
@@ -149,8 +148,8 @@ namespace SistemaVBA
             //SELECTION MODE
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
-
-            string sqlQuery = "SELECT * FROM produto";
+            
+            string sqlQuery = "SELECT id,nome,marca,modelo,preco_de_custo,preco_final,codigo_de_barras FROM produto";
 
             var connectionString = "server=localhost;uid=root;database=cadastro";
 
@@ -162,8 +161,18 @@ namespace SistemaVBA
                     {
                         adapter.Fill(table);
                         dataGridView1.DataSource = table;
-                        dataGridView1.AllowUserToAddRows = false;
+                        dataGridView1.Columns[0].Width = 30;
+                        dataGridView1.Columns[4].Width = 115;
+                        dataGridView1.Columns[5].Width = 100;
+                        dataGridView1.Columns[6].Width = 93;
 
+                        dataGridView1.Columns[0].HeaderText = "ID";
+                        dataGridView1.Columns[1].HeaderText = "Nome";
+                        dataGridView1.Columns[2].HeaderText = "Marca";
+                        dataGridView1.Columns[3].HeaderText = "Modelo";
+                        dataGridView1.Columns[4].HeaderText = "Preço de Custo";
+                        dataGridView1.Columns[5].HeaderText = "Preço Final";
+                        dataGridView1.Columns[6].HeaderText = "Código de Barras";
                     }
                 }
 
@@ -192,6 +201,8 @@ namespace SistemaVBA
                     int rowsAffected = comando.ExecuteNonQuery();
                     // Faça o que desejar com a informação sobre as linhas afetadas, se necessário.
                     MessageBox.Show("Deletado com Sucesso");
+                    atualizar();
+
                 }
                 catch (Exception ex)
                 {
@@ -203,7 +214,6 @@ namespace SistemaVBA
                     conexao.Close();
                 }
             }
-
 
         }
 
@@ -221,6 +231,7 @@ namespace SistemaVBA
                     int rowsAffected = comando.ExecuteNonQuery();
                     // Faça o que desejar com a informação sobre as linhas afetadas, se necessário.
                     MessageBox.Show("Produto atualizado com Sucesso");
+                    atualizar();
                 }
                 catch (Exception ex)
                 {
@@ -234,5 +245,38 @@ namespace SistemaVBA
             }
 
         }
-    }
+
+        private void atualizar()
+        {
+            DataTable table = new DataTable();
+
+            //SELECTION MODE
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
+
+            string sqlQuery = "SELECT id,nome,marca,modelo,preco_de_custo,preco_final,codigo_de_barras FROM produto";
+
+            var connectionString = "server=localhost;uid=root;database=cadastro";
+
+            using (MySqlConnection conexao = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
+                {
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(comando))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Associe o DataTable ao DataGridView
+                        dataGridView1.DataSource = dataTable;
+                    }
+                }
+                }
+
+            }
+
+        }
+
+
 }
+
