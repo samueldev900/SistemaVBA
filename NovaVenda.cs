@@ -18,13 +18,17 @@ namespace SistemaVBA
         public string data;
         public string hora;
         public string nomeTabela;
+        public int valorRecebido;
+        public int troco;
         public NovaVenda()
         {
             InitializeComponent();
             data = DateTime.Today.ToString("ddMMyyyy");
-            hora = DateTime.Now.Hour.ToString() + ":"+ DateTime.Now.Minute.ToString();
+            hora = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
             nomeTabela = $"table_{data}";
             tableExist();
+
+            valorRecebido = 12;
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -58,6 +62,14 @@ namespace SistemaVBA
                     {
                         adapter.Fill(table);
                         dataGridView1.DataSource = table;
+                        dataGridView1.Columns[0].Width = 30;
+                        dataGridView1.Columns[1].Width = 171;
+
+                        dataGridView1.Columns[0].HeaderText = "ID";
+                        dataGridView1.Columns[1].HeaderText = "Nome";
+                        dataGridView1.Columns[2].HeaderText = "Marca";
+                        dataGridView1.Columns[3].HeaderText = "Modelo";
+                        dataGridView1.Columns[4].HeaderText = "Preço";
 
                     }
                 }
@@ -79,7 +91,7 @@ namespace SistemaVBA
             var sqlString = "CREATE TABLE " + nomeTabela + " (\r\n    id INT PRIMARY KEY AUTO_INCREMENT,\r\n    produto VARCHAR(50) NOT NULL,\r\n    modelo VARCHAR(50) NOT NULL,\r\n    preco_final DECIMAL(10, 2),\r\n    hora_venda VARCHAR(20)\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
             using (MySqlConnection conexao = new MySqlConnection(strConnection))
             {
-                using(MySqlCommand comando = new MySqlCommand(sqlString, conexao))
+                using (MySqlCommand comando = new MySqlCommand(sqlString, conexao))
                 {
 
                     try
@@ -96,7 +108,7 @@ namespace SistemaVBA
 
                 }
             }
-               
+
 
         }
 
@@ -132,6 +144,19 @@ namespace SistemaVBA
             }
         }
 
-
+        private void dinheiro_radio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                textBox1.Visible = true;
+                labelValorRecebido.Visible = false;
+                valorRecebidoTextBox.Visible = false;
+                trocoLabel.Visible = false;
+            }
+            else
+            {
+                textBox1.Visible = false;
+            }
+        }
     }
 }

@@ -37,6 +37,9 @@
             radioButton3 = new RadioButton();
             label1 = new Label();
             label2 = new Label();
+            valorRecebidoTextBox = new TextBox();
+            trocoLabel = new Label();
+            labelValorRecebido = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -70,6 +73,7 @@
             dinheiro_radio.TabStop = true;
             dinheiro_radio.Text = "Dinheiro";
             dinheiro_radio.UseVisualStyleBackColor = true;
+            dinheiro_radio.CheckedChanged += dinheiro_radio_CheckedChanged;
             // 
             // textBox1
             // 
@@ -81,7 +85,7 @@
             // radioButton1
             // 
             radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(22, 117);
+            radioButton1.Location = new Point(22, 242);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(60, 19);
             radioButton1.TabIndex = 4;
@@ -92,7 +96,7 @@
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(22, 155);
+            radioButton2.Location = new Point(22, 267);
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(64, 19);
             radioButton2.TabIndex = 5;
@@ -103,7 +107,7 @@
             // radioButton3
             // 
             radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(22, 190);
+            radioButton3.Location = new Point(22, 292);
             radioButton3.Name = "radioButton3";
             radioButton3.Size = new Size(41, 19);
             radioButton3.TabIndex = 6;
@@ -129,11 +133,39 @@
             label2.TabIndex = 8;
             label2.Text = "Pesquisar Produto:";
             // 
+            // valorRecebidoTextBox
+            // 
+            valorRecebidoTextBox.Location = new Point(22, 125);
+            valorRecebidoTextBox.Name = "valorRecebidoTextBox";
+            valorRecebidoTextBox.Size = new Size(100, 23);
+            valorRecebidoTextBox.TabIndex = 9;
+            // 
+            // trocoLabel
+            // 
+            trocoLabel.AutoSize = true;
+            trocoLabel.Location = new Point(22, 161);
+            trocoLabel.Name = "trocoLabel";
+            trocoLabel.Size = new Size(39, 15);
+            trocoLabel.TabIndex = 10;
+            trocoLabel.Text = "Troco:";
+            // 
+            // labelValorRecebido
+            // 
+            labelValorRecebido.AutoSize = true;
+            labelValorRecebido.Location = new Point(22, 107);
+            labelValorRecebido.Name = "labelValorRecebido";
+            labelValorRecebido.Size = new Size(88, 15);
+            labelValorRecebido.TabIndex = 11;
+            labelValorRecebido.Text = "Valor Recebido:";
+            // 
             // NovaVenda
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(labelValorRecebido);
+            Controls.Add(trocoLabel);
+            Controls.Add(valorRecebidoTextBox);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(radioButton3);
@@ -162,5 +194,8 @@
         private RadioButton radioButton3;
         private Label label1;
         private Label label2;
+        private TextBox valorRecebidoTextBox;
+        private Label trocoLabel;
+        private Label labelValorRecebido;
     }
 }
