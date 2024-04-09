@@ -33,8 +33,8 @@
             dinheiro_radio = new RadioButton();
             textBox1 = new TextBox();
             radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
-            radioButton3 = new RadioButton();
+            credito_radioButton = new RadioButton();
+            pix_radioButton = new RadioButton();
             label1 = new Label();
             label2 = new Label();
             valorRecebidoTextBox = new TextBox();
@@ -85,35 +85,38 @@
             // radioButton1
             // 
             radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(22, 242);
+            radioButton1.Location = new Point(22, 172);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(60, 19);
             radioButton1.TabIndex = 4;
             radioButton1.TabStop = true;
             radioButton1.Text = "Débito";
             radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
             // 
-            // radioButton2
+            // credito_radioButton
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(22, 267);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(64, 19);
-            radioButton2.TabIndex = 5;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Crédito";
-            radioButton2.UseVisualStyleBackColor = true;
+            credito_radioButton.AutoSize = true;
+            credito_radioButton.Location = new Point(22, 197);
+            credito_radioButton.Name = "credito_radioButton";
+            credito_radioButton.Size = new Size(64, 19);
+            credito_radioButton.TabIndex = 5;
+            credito_radioButton.TabStop = true;
+            credito_radioButton.Text = "Crédito";
+            credito_radioButton.UseVisualStyleBackColor = true;
+            credito_radioButton.CheckedChanged += credito_radioButton_CheckedChanged;
             // 
-            // radioButton3
+            // pix_radioButton
             // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(22, 292);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(41, 19);
-            radioButton3.TabIndex = 6;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "Pix";
-            radioButton3.UseVisualStyleBackColor = true;
+            pix_radioButton.AutoSize = true;
+            pix_radioButton.Location = new Point(22, 222);
+            pix_radioButton.Name = "pix_radioButton";
+            pix_radioButton.Size = new Size(41, 19);
+            pix_radioButton.TabIndex = 6;
+            pix_radioButton.TabStop = true;
+            pix_radioButton.Text = "Pix";
+            pix_radioButton.UseVisualStyleBackColor = true;
+            pix_radioButton.CheckedChanged += pix_radioButton_CheckedChanged;
             // 
             // label1
             // 
@@ -143,11 +146,12 @@
             // trocoLabel
             // 
             trocoLabel.AutoSize = true;
-            trocoLabel.Location = new Point(22, 161);
+            trocoLabel.Location = new Point(22, 151);
             trocoLabel.Name = "trocoLabel";
             trocoLabel.Size = new Size(39, 15);
             trocoLabel.TabIndex = 10;
             trocoLabel.Text = "Troco:";
+            trocoLabel.Click += trocoLabel_Click;
             // 
             // labelValorRecebido
             // 
@@ -168,8 +172,8 @@
             Controls.Add(valorRecebidoTextBox);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(radioButton3);
-            Controls.Add(radioButton2);
+            Controls.Add(pix_radioButton);
+            Controls.Add(credito_radioButton);
             Controls.Add(radioButton1);
             Controls.Add(textBox1);
             Controls.Add(dinheiro_radio);
@@ -190,8 +194,8 @@
         private RadioButton dinheiro_radio;
         private TextBox textBox1;
         private RadioButton radioButton1;
-        private RadioButton radioButton2;
-        private RadioButton radioButton3;
+        private RadioButton credito_radioButton;
+        private RadioButton pix_radioButton;
         private Label label1;
         private Label label2;
         private TextBox valorRecebidoTextBox;

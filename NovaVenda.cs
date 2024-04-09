@@ -18,6 +18,7 @@ namespace SistemaVBA
         public string data;
         public string hora;
         public string nomeTabela;
+        public string metodoPagamento;
         public int valorRecebido;
         public int troco;
         public NovaVenda()
@@ -28,7 +29,12 @@ namespace SistemaVBA
             nomeTabela = $"table_{data}";
             tableExist();
 
-            valorRecebido = 12;
+            troco = valorRecebido - 12;
+
+            labelValorRecebido.Visible = false;
+            valorRecebidoTextBox.Visible = false;
+            trocoLabel.Visible = false;
+            
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -37,12 +43,6 @@ namespace SistemaVBA
 
         private void NovaVenda_Load(object sender, EventArgs e)
         {
-            //table.Columns.Add("ID", typeof(int));
-            //table.Columns.Add("Product Name", typeof(string));
-            //table.Columns.Add("Marca", typeof(string));
-            //table.Columns.Add("Modelo", typeof(string));
-            //table.Columns.Add("Preço", typeof(int));
-
 
             DataTable table = new DataTable();
 
@@ -75,6 +75,17 @@ namespace SistemaVBA
                 }
 
             }
+            trocoLabel.Text = $"Troco: R${troco},00";
+            if (valorRecebidoTextBox.Text == "")
+            {
+                valorRecebido = 0;
+            }
+            else
+            {
+                valorRecebido = int.Parse(valorRecebidoTextBox.Text);
+            }
+            
+
 
 
         }
@@ -148,15 +159,51 @@ namespace SistemaVBA
         {
             if (radioButton1.Checked)
             {
-                textBox1.Visible = true;
                 labelValorRecebido.Visible = false;
                 valorRecebidoTextBox.Visible = false;
                 trocoLabel.Visible = false;
             }
             else
             {
-                textBox1.Visible = false;
+                labelValorRecebido.Visible = true;
+                valorRecebidoTextBox.Visible = true;
+                trocoLabel.Visible = true;
+                metodoPagamento = "Dinheiro";
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                metodoPagamento = "Débito";
+                MessageBox.Show(metodoPagamento);
+            }
+        }
+
+        private void credito_radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                metodoPagamento = "Crédito";
+                MessageBox.Show(metodoPagamento);
+            }
+        }
+
+        private void pix_radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                metodoPagamento = "Pix";
+                MessageBox.Show(metodoPagamento);
+
+            }
+
+        }
+
+        private void trocoLabel_Click(object sender, EventArgs e)
+        {
+            trocoLabel.Text = "metodoPagamento";
         }
     }
 }
