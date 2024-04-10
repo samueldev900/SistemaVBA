@@ -14,7 +14,7 @@ namespace SistemaVBA
 {
     public partial class NovaVenda : Form
     {
-        private string produto;
+        private string[] produto = new string[5];
         public string data;
         public string hora;
         public string nomeTabela;
@@ -42,21 +42,61 @@ namespace SistemaVBA
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            int index = e.RowIndex;
-            // Obtenha a referência para a linha selecionada
-            DataGridViewRow row = dataGridView1.Rows[index];
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
+            {
 
-            textBox2.Text = row.Cells[1].Value.ToString();
-            textBox3.Text = row.Cells[2].Value.ToString();
-            textBox4.Text = row.Cells[3].Value.ToString();
-            textBox5.Text = row.Cells[4].Value.ToString();
+                if (row.Cells[1].Value != null)
+                    textBox2.Text = row.Cells[1].Value.ToString();
+                else
+                    textBox2.Text = "";
+
+                if (row.Cells[2].Value != null)
+                    textBox3.Text = row.Cells[2].Value.ToString();
+                else
+                    textBox3.Text = "";
+
+                if (row.Cells[3].Value != null)
+                    textBox4.Text = row.Cells[3].Value.ToString();
+                else
+                    textBox4.Text = "";
+
+                if (row.Cells[4].Value != null)
+                {
+                    textBox5.Text = row.Cells[4].Value.ToString();
+                    label3.Text = $"Total: {row.Cells[4].Value}";
+                    if (decimal.TryParse(row.Cells[4].Value.ToString(), out decimal valor))
+                    {
+                        valorProduto = valor;
+                    }
+                    else
+                    {
+                        // Não foi possível converter para decimal, faça algo aqui para lidar com isso.
+                    }
+                }
+                else
+                {
+                    textBox5.Text = "";
+                    label3.Text = "Total: ";
+                }
+            }
 
             label3.Text = $"Total: {row.Cells[4].Value}";
             valorProduto = (decimal)row.Cells[4].Value;
+            nomeProduto_label.Text = $"Produto: {row.Cells[1].Value.ToString()}";
+            produto[0] = row.Cells[1].Value.ToString();
+            produto[1] = row.Cells[4].Value.ToString();
+
 
 
         }
+  
+
+
+
+
+
 
         private void NovaVenda_Load(object sender, EventArgs e)
         {
@@ -94,10 +134,6 @@ namespace SistemaVBA
             }
         }
 
-        public string getProduto()
-        {
-            return this.produto;
-        }
 
 
         public void createTable()
@@ -161,7 +197,7 @@ namespace SistemaVBA
 
         private void dinheiro_radio_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton1.Checked)
+            if (debitoButton1.Checked)
             {
                 labelValorRecebido.Visible = false;
                 valorRecebidoTextBox.Visible = false;
@@ -178,7 +214,7 @@ namespace SistemaVBA
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton1.Checked)
+            if (debitoButton1.Checked)
             {
                 metodoPagamento = "Débito";
             }
@@ -186,7 +222,7 @@ namespace SistemaVBA
 
         private void credito_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton1.Checked)
+            if (debitoButton1.Checked)
             {
                 metodoPagamento = "Crédito";
             }
@@ -194,7 +230,7 @@ namespace SistemaVBA
 
         private void pix_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton1.Checked)
+            if (debitoButton1.Checked)
             {
                 metodoPagamento = "Pix";
 
@@ -219,7 +255,7 @@ namespace SistemaVBA
             }
 
             // Calcula o troco
-            
+
             decimal troco = valorRecebidoInt - valorProduto;
 
             // Atualiza o texto do label
@@ -240,6 +276,51 @@ namespace SistemaVBA
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(!dinheiro_radio.Checked && !debitoButton1.Checked && !credito_radioButton.Checked && !pix_radioButton.Checked )
+            {
+                MessageBox.Show("Por favor selecione um método de Pagamento");
+            }
+            else if(textBox2.Text.Length == 0 && textBox5.Text.Length == 0)
+            {
+                MessageBox.Show("Por favor, Selecione um produto");
+
+            }
+            else if(dinheiro_radio.Checked && valorRecebidoTextBox.Text.Length == 0)
+            {
+                MessageBox.Show("Informe o Valor Recebido");
+            }
+            else
+            {
+                string connectionString = "server=localhost;uid=root;database=vendas";
+
+                var sql = $"INSERT INTO {nomeTabela} (id, produto, modelo, preco_final) VALUES (NULL, {Convert.ToInt32(produto[0])}, NULL, {produto[1]})";
+                using (MySqlConnection conexao = new MySqlConnection(connectionString))
+                {
+                    conexao.Open();
+                    using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                    {
+                        comando.Parameters.AddWithValue("@produto", produto[0]);
+                        comando.Parameters.AddWithValue("@preco_final", produto[1]); // Suponho que produto[2] seja o preço final
+
+                        // Executa o comando
+                        int linhasAfetadas = comando.ExecuteNonQuery();
+
+                        // Verifica se a inserção foi bem sucedida
+                        if (linhasAfetadas > 0)
+                        {
+                            Console.WriteLine("Venda bem sucedida!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Falha na inserção!");
+                        }
+                    }
+                }
+            }
         }
     }
 }

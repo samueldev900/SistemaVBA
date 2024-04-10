@@ -32,7 +32,7 @@
             button1 = new Button();
             dinheiro_radio = new RadioButton();
             textBox1 = new TextBox();
-            radioButton1 = new RadioButton();
+            debitoButton1 = new RadioButton();
             credito_radioButton = new RadioButton();
             pix_radioButton = new RadioButton();
             label1 = new Label();
@@ -45,6 +45,7 @@
             textBox4 = new TextBox();
             textBox5 = new TextBox();
             label3 = new Label();
+            nomeProduto_label = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -67,6 +68,7 @@
             button1.TabIndex = 1;
             button1.Text = "Efetuar Venda";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // dinheiro_radio
             // 
@@ -87,17 +89,17 @@
             textBox1.Size = new Size(504, 23);
             textBox1.TabIndex = 3;
             // 
-            // radioButton1
+            // debitoButton1
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(22, 172);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(60, 19);
-            radioButton1.TabIndex = 4;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Débito";
-            radioButton1.UseVisualStyleBackColor = true;
-            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            debitoButton1.AutoSize = true;
+            debitoButton1.Location = new Point(22, 172);
+            debitoButton1.Name = "debitoButton1";
+            debitoButton1.Size = new Size(60, 19);
+            debitoButton1.TabIndex = 4;
+            debitoButton1.TabStop = true;
+            debitoButton1.Text = "Débito";
+            debitoButton1.UseVisualStyleBackColor = true;
+            debitoButton1.CheckedChanged += radioButton1_CheckedChanged;
             // 
             // credito_radioButton
             // 
@@ -169,28 +171,28 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(865, 99);
+            textBox2.Location = new Point(813, 99);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(177, 23);
             textBox2.TabIndex = 12;
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(865, 128);
+            textBox3.Location = new Point(813, 128);
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(177, 23);
             textBox3.TabIndex = 13;
             // 
             // textBox4
             // 
-            textBox4.Location = new Point(865, 168);
+            textBox4.Location = new Point(813, 168);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(177, 23);
             textBox4.TabIndex = 14;
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(865, 197);
+            textBox5.Location = new Point(813, 197);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(177, 23);
             textBox5.TabIndex = 15;
@@ -199,18 +201,29 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 20F);
-            label3.Location = new Point(865, 258);
+            label3.Location = new Point(813, 303);
             label3.Name = "label3";
             label3.Size = new Size(80, 37);
             label3.TabIndex = 16;
             label3.Text = "Total:";
             label3.Click += label3_Click;
             // 
+            // nomeProduto_label
+            // 
+            nomeProduto_label.AutoSize = true;
+            nomeProduto_label.Font = new Font("Segoe UI", 20F);
+            nomeProduto_label.Location = new Point(813, 266);
+            nomeProduto_label.Name = "nomeProduto_label";
+            nomeProduto_label.Size = new Size(119, 37);
+            nomeProduto_label.TabIndex = 17;
+            nomeProduto_label.Text = "Produto:";
+            // 
             // NovaVenda
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1088, 450);
+            ClientSize = new Size(1312, 450);
+            Controls.Add(nomeProduto_label);
             Controls.Add(label3);
             Controls.Add(textBox5);
             Controls.Add(textBox4);
@@ -223,7 +236,7 @@
             Controls.Add(label1);
             Controls.Add(pix_radioButton);
             Controls.Add(credito_radioButton);
-            Controls.Add(radioButton1);
+            Controls.Add(debitoButton1);
             Controls.Add(textBox1);
             Controls.Add(dinheiro_radio);
             Controls.Add(button1);
@@ -242,7 +255,7 @@
         private Button button1;
         private RadioButton dinheiro_radio;
         private TextBox textBox1;
-        private RadioButton radioButton1;
+        private RadioButton debitoButton1;
         private RadioButton credito_radioButton;
         private RadioButton pix_radioButton;
         private Label label1;
@@ -255,5 +268,6 @@
         private TextBox textBox4;
         private TextBox textBox5;
         private Label label3;
+        private Label nomeProduto_label;
     }
 }
