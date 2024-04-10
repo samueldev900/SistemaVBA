@@ -19,8 +19,9 @@ namespace SistemaVBA
         public string hora;
         public string nomeTabela;
         public string metodoPagamento;
-        public int valorRecebido;
         public int troco;
+        public int valorRecebidoInt;
+        public decimal valorProduto;
         public NovaVenda()
         {
             InitializeComponent();
@@ -29,15 +30,31 @@ namespace SistemaVBA
             nomeTabela = $"table_{data}";
             tableExist();
 
-            troco = valorRecebido - 12;
+            troco = valorRecebidoInt - 12;
 
             labelValorRecebido.Visible = false;
             valorRecebidoTextBox.Visible = false;
             trocoLabel.Visible = false;
-            
+
+            valorRecebidoTextBox.TextChanged += valorRecebidoTextBox_TextChanged;
+            valorRecebidoTextBox.KeyPress += valorRecebidoTextBox_KeyPress;
+
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            int index = e.RowIndex;
+            // Obtenha a referência para a linha selecionada
+            DataGridViewRow row = dataGridView1.Rows[index];
+
+
+            textBox2.Text = row.Cells[1].Value.ToString();
+            textBox3.Text = row.Cells[2].Value.ToString();
+            textBox4.Text = row.Cells[3].Value.ToString();
+            textBox5.Text = row.Cells[4].Value.ToString();
+
+            label3.Text = $"Total: {row.Cells[4].Value}";
+            valorProduto = (decimal)row.Cells[4].Value;
+
 
         }
 
@@ -75,19 +92,6 @@ namespace SistemaVBA
                 }
 
             }
-            trocoLabel.Text = $"Troco: R${troco},00";
-            if (valorRecebidoTextBox.Text == "")
-            {
-                valorRecebido = 0;
-            }
-            else
-            {
-                valorRecebido = int.Parse(valorRecebidoTextBox.Text);
-            }
-            
-
-
-
         }
 
         public string getProduto()
@@ -177,7 +181,6 @@ namespace SistemaVBA
             if (radioButton1.Checked)
             {
                 metodoPagamento = "Débito";
-                MessageBox.Show(metodoPagamento);
             }
         }
 
@@ -186,7 +189,6 @@ namespace SistemaVBA
             if (radioButton1.Checked)
             {
                 metodoPagamento = "Crédito";
-                MessageBox.Show(metodoPagamento);
             }
         }
 
@@ -195,7 +197,6 @@ namespace SistemaVBA
             if (radioButton1.Checked)
             {
                 metodoPagamento = "Pix";
-                MessageBox.Show(metodoPagamento);
 
             }
 
@@ -204,6 +205,41 @@ namespace SistemaVBA
         private void trocoLabel_Click(object sender, EventArgs e)
         {
             trocoLabel.Text = "metodoPagamento";
+        }
+        private void valorRecebidoTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // Obtém o texto atual do textbox
+            string texto = valorRecebidoTextBox.Text;
+            decimal valorRecebidoInt = 0;
+
+            // Verifica se o texto não está vazio
+            if (!string.IsNullOrEmpty(texto))
+            {
+                valorRecebidoInt = decimal.Parse(texto);
+            }
+
+            // Calcula o troco
+            
+            decimal troco = valorRecebidoInt - valorProduto;
+
+            // Atualiza o texto do label
+            trocoLabel.Text = $"Troco: R$ {troco}";
+        }
+
+        private void valorRecebidoTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado não é um número ou a tecla backspace
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                // Cancela a tecla pressionada
+                e.Handled = true;
+
+            }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

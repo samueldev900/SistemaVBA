@@ -40,6 +40,11 @@
             valorRecebidoTextBox = new TextBox();
             trocoLabel = new Label();
             labelValorRecebido = new Label();
+            textBox2 = new TextBox();
+            textBox3 = new TextBox();
+            textBox4 = new TextBox();
+            textBox5 = new TextBox();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -162,11 +167,55 @@
             labelValorRecebido.TabIndex = 11;
             labelValorRecebido.Text = "Valor Recebido:";
             // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(865, 99);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(177, 23);
+            textBox2.TabIndex = 12;
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(865, 128);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(177, 23);
+            textBox3.TabIndex = 13;
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(865, 168);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(177, 23);
+            textBox4.TabIndex = 14;
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(865, 197);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(177, 23);
+            textBox5.TabIndex = 15;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 20F);
+            label3.Location = new Point(865, 258);
+            label3.Name = "label3";
+            label3.Size = new Size(80, 37);
+            label3.TabIndex = 16;
+            label3.Text = "Total:";
+            label3.Click += label3_Click;
+            // 
             // NovaVenda
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1088, 450);
+            Controls.Add(label3);
+            Controls.Add(textBox5);
+            Controls.Add(textBox4);
+            Controls.Add(textBox3);
+            Controls.Add(textBox2);
             Controls.Add(labelValorRecebido);
             Controls.Add(trocoLabel);
             Controls.Add(valorRecebidoTextBox);
@@ -201,5 +250,10 @@
         private TextBox valorRecebidoTextBox;
         private Label trocoLabel;
         private Label labelValorRecebido;
+        private TextBox textBox2;
+        private TextBox textBox3;
+        private TextBox textBox4;
+        private TextBox textBox5;
+        private Label label3;
     }
 }
