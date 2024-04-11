@@ -19,9 +19,10 @@ namespace SistemaVBA
         public string hora;
         public string nomeTabela;
         public string metodoPagamento;
-        public int troco;
+        public decimal troco = 0;
         public int valorRecebidoInt;
         public decimal valorProduto;
+        public string modelo = "--";
         public NovaVenda()
         {
             InitializeComponent();
@@ -30,7 +31,6 @@ namespace SistemaVBA
             nomeTabela = $"table_{data}";
             tableExist();
 
-            troco = valorRecebidoInt - 12;
 
             labelValorRecebido.Visible = false;
             valorRecebidoTextBox.Visible = false;
@@ -139,7 +139,8 @@ namespace SistemaVBA
         public void createTable()
         {
             var strConnection = "server=localhost;uid=root;database=vendas";
-            var sqlString = "CREATE TABLE " + nomeTabela + " (\r\n    id INT PRIMARY KEY AUTO_INCREMENT,\r\n    produto VARCHAR(50) NOT NULL,\r\n    modelo VARCHAR(50) NOT NULL,\r\n    preco_final DECIMAL(10, 2),\r\n    hora_venda VARCHAR(20)\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+            var sqlString = $"CREATE TABLE {nomeTabela} (\r\n    id INT PRIMARY KEY AUTO_INCREMENT,\r\n    produto VARCHAR(50) NOT NULL,\r\n    modelo VARCHAR(50) NOT NULL,\r\n    metodo_pagamento varchar(20) NOT NULL,\r\n    troco DECIMAL(10, 2),\r\n    preco_final DECIMAL(10, 2),\r\n    hora_venda DATETIME DEFAULT CURRENT_TIMESTAMP\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
             using (MySqlConnection conexao = new MySqlConnection(strConnection))
             {
                 using (MySqlCommand comando = new MySqlCommand(sqlString, conexao))
@@ -280,6 +281,7 @@ namespace SistemaVBA
 
         private void button1_Click(object sender, EventArgs e)
         {
+           
             if(!dinheiro_radio.Checked && !debitoButton1.Checked && !credito_radioButton.Checked && !pix_radioButton.Checked )
             {
                 MessageBox.Show("Por favor selecione um método de Pagamento");
@@ -296,15 +298,28 @@ namespace SistemaVBA
             else
             {
                 string connectionString = "server=localhost;uid=root;database=vendas";
+                if (!dinheiro_radio.Checked)
+                {
+                    valorRecebidoInt = 0;
+                    troco = 0;
+                }
+                else
+                {
+                    valorRecebidoInt = Convert.ToInt32(valorRecebidoTextBox.Text);
+                    troco = valorRecebidoInt - Convert.ToDecimal(produto[1]);
+                }
 
-                var sql = $"INSERT INTO {nomeTabela} (id, produto, modelo, preco_final) VALUES (NULL, {Convert.ToInt32(produto[0])}, NULL, {produto[1]})";
+                var sql = $"INSERT INTO {nomeTabela} (id, produto, modelo,metodo_pagamento,troco, preco_final) VALUES (NULL, @produto, modelo,@metodo_pagamento,@troco, @preco_final)";
                 using (MySqlConnection conexao = new MySqlConnection(connectionString))
                 {
                     conexao.Open();
                     using (MySqlCommand comando = new MySqlCommand(sql, conexao))
                     {
                         comando.Parameters.AddWithValue("@produto", produto[0]);
-                        comando.Parameters.AddWithValue("@preco_final", produto[1]); // Suponho que produto[2] seja o preço final
+                        //comando.Parameters.AddWithValue("@modelo", modelo);
+                        comando.Parameters.AddWithValue("@metodo_pagamento", metodoPagamento);
+                        comando.Parameters.AddWithValue("@troco", troco);
+                        comando.Parameters.AddWithValue("@preco_final", produto[1]); // Suponho que produto[1] seja o preço final
 
                         // Executa o comando
                         int linhasAfetadas = comando.ExecuteNonQuery();
@@ -312,14 +327,15 @@ namespace SistemaVBA
                         // Verifica se a inserção foi bem sucedida
                         if (linhasAfetadas > 0)
                         {
-                            Console.WriteLine("Venda bem sucedida!");
+                            MessageBox.Show("Venda bem sucedida!");
                         }
                         else
                         {
-                            Console.WriteLine("Falha na inserção!");
+                            MessageBox.Show("Falha na inserção");
                         }
                     }
                 }
+
             }
         }
     }
