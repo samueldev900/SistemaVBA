@@ -52,7 +52,9 @@
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.GridColor = SystemColors.Info;
             dataGridView1.Location = new Point(284, 81);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
@@ -241,6 +243,7 @@
             Controls.Add(dinheiro_radio);
             Controls.Add(button1);
             Controls.Add(dataGridView1);
+            ForeColor = SystemColors.ControlText;
             Name = "NovaVenda";
             Text = "Nova Venda";
             Load += NovaVenda_Load;

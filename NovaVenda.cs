@@ -231,7 +231,7 @@ namespace SistemaVBA
 
         private void pix_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (debitoButton1.Checked)
+            if (pix_radioButton.Checked)
             {
                 metodoPagamento = "Pix";
 
@@ -282,7 +282,7 @@ namespace SistemaVBA
         private void button1_Click(object sender, EventArgs e)
         {
            
-            if(!dinheiro_radio.Checked && !debitoButton1.Checked && !credito_radioButton.Checked && !pix_radioButton.Checked )
+            if(!dinheiro_radio.Checked && !debitoButton1.Checked && !credito_radioButton.Checked && !pix_radioButton.Checked)
             {
                 MessageBox.Show("Por favor selecione um método de Pagamento");
             }
