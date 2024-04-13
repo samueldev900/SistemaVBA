@@ -40,12 +40,12 @@
             valorRecebidoTextBox = new TextBox();
             trocoLabel = new Label();
             labelValorRecebido = new Label();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
             textBox5 = new TextBox();
             label3 = new Label();
             nomeProduto_label = new Label();
+            textBox4 = new TextBox();
+            textBox3 = new TextBox();
+            textBox2 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -171,27 +171,6 @@
             labelValorRecebido.TabIndex = 11;
             labelValorRecebido.Text = "Valor Recebido:";
             // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(813, 99);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(177, 23);
-            textBox2.TabIndex = 12;
-            // 
-            // textBox3
-            // 
-            textBox3.Location = new Point(813, 128);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(177, 23);
-            textBox3.TabIndex = 13;
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(813, 168);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(177, 23);
-            textBox4.TabIndex = 14;
-            // 
             // textBox5
             // 
             textBox5.Location = new Point(813, 197);
@@ -219,6 +198,27 @@
             nomeProduto_label.Size = new Size(119, 37);
             nomeProduto_label.TabIndex = 17;
             nomeProduto_label.Text = "Produto:";
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(813, 168);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(177, 23);
+            textBox4.TabIndex = 14;
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(813, 128);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(177, 23);
+            textBox3.TabIndex = 13;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(813, 99);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(177, 23);
+            textBox2.TabIndex = 12;
             // 
             // NovaVenda
             // 
@@ -266,11 +266,11 @@
         private TextBox valorRecebidoTextBox;
         private Label trocoLabel;
         private Label labelValorRecebido;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
         private TextBox textBox5;
         private Label label3;
         private Label nomeProduto_label;
+        private TextBox textBox4;
+        private TextBox textBox3;
+        private TextBox textBox2;
     }
 }

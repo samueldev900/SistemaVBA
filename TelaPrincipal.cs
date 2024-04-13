@@ -19,6 +19,8 @@ namespace SistemaVBA
         public string nomeTable;
         public string stringId;
         public string hora;
+        public decimal totalVendas;
+        public decimal somaVendas;
 
         public TelaPrincipal()
         {
@@ -28,7 +30,7 @@ namespace SistemaVBA
             nomeTable = $"table_{data}";
 
             tableExist();
-
+            somarVenda();
 
         }
 
@@ -43,10 +45,16 @@ namespace SistemaVBA
         private void novaVenda_button_Click(object sender, EventArgs e)
         {
             var cadastro = new NovaVenda();
+            cadastro.FormClosed += NovaVenda_FormClosed; // Assim que a janela for fechada, chama a função NovaVenda_FormClosed
             cadastro.TopMost = true;
             cadastro.ShowDialog();
         }
 
+        private void NovaVenda_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            atualizar(); // Chama a função atualizar() quando a janela NovaVenda for fechada
+            somarVenda();
+        }
         public void TelaPrincipal_Load(object sender, EventArgs e)
         {
             DataTable table = new DataTable();
@@ -113,6 +121,8 @@ namespace SistemaVBA
                         // Faça o que desejar com a informação sobre as linhas afetadas, se necessário.
                         MessageBox.Show("Deletado com Sucesso");
                         atualizar();
+                        somarVenda();
+
                     }
                 }
                 catch (Exception ex)
@@ -223,7 +233,50 @@ namespace SistemaVBA
         private void button1_Click(object sender, EventArgs e)
         {
             atualizar();
+            somarVenda();
         }
+
+        private void somarVenda()
+        {
+            somaVendas = 0;
+            var connectionString = "server=localhost;uid=root;database=vendas";
+            string sql = $"SELECT preco_final from {nomeTable}";
+            using (MySqlConnection conexao = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                {
+                    try
+                    {
+                        conexao.Open();
+                        using (MySqlDataReader reader = comando.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+
+                                decimal precoFinal = reader.GetDecimal(0); // Obtém o valor da primeira coluna (0)
+                                                                           // Faça o que precisar com o valor obtido, como somar ou exibir
+                                somaVendas += precoFinal;
+                            }
+                            if(somaVendas > totalVendas)
+                            {   
+                                totalVendas = somaVendas;
+                                totalVendas_label.Text = $"R$ {totalVendas}";
+                            }
+                            
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ocorreu um erro ao Selecionar dados: {ex.Message}");
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+
+        }
+
+
     }
 
 }

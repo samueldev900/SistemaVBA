@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            label2 = new Label();
+            totalVendas_label = new Label();
             novaVenda_button = new Button();
             cadastroProduto_button = new Button();
             dataGridView1 = new DataGridView();
@@ -50,15 +50,16 @@
             label1.TabIndex = 0;
             label1.Text = "Total de vendas Hoje:";
             // 
-            // label2
+            // totalVendas_label
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 40F);
-            label2.Location = new Point(575, 46);
-            label2.Name = "label2";
-            label2.Size = new Size(234, 72);
-            label2.TabIndex = 1;
-            label2.Text = "R$ 19.90";
+            totalVendas_label.AutoSize = true;
+            totalVendas_label.Font = new Font("Segoe UI", 40F);
+            totalVendas_label.Location = new Point(575, 46);
+            totalVendas_label.Name = "totalVendas_label";
+            totalVendas_label.Size = new Size(234, 72);
+            totalVendas_label.TabIndex = 1;
+            totalVendas_label.Text = "R$ 19.90";
+       
             // 
             // novaVenda_button
             // 
@@ -133,7 +134,7 @@
             Controls.Add(dataGridView1);
             Controls.Add(cadastroProduto_button);
             Controls.Add(novaVenda_button);
-            Controls.Add(label2);
+            Controls.Add(totalVendas_label);
             Controls.Add(label1);
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4);
@@ -149,7 +150,7 @@
         #endregion
 
         private Label label1;
-        private Label label2;
+        private Label totalVendas_label;
         private Button novaVenda_button;
         private Button cadastroProduto_button;
         private DataGridView dataGridView1;

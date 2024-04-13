@@ -93,10 +93,6 @@ namespace SistemaVBA
   
 
 
-
-
-
-
         private void NovaVenda_Load(object sender, EventArgs e)
         {
 
@@ -266,6 +262,7 @@ namespace SistemaVBA
                         if (linhasAfetadas > 0)
                         {
                             MessageBox.Show("Venda bem sucedida!");
+                            this.Close();
                         }
                         else
                         {
