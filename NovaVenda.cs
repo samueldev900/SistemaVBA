@@ -29,7 +29,6 @@ namespace SistemaVBA
             data = DateTime.Today.ToString("ddMMyyyy");
             hora = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
             nomeTabela = $"table_{data}";
-            tableExist();
 
 
             labelValorRecebido.Visible = false;
@@ -134,68 +133,7 @@ namespace SistemaVBA
             }
         }
 
-
-
-        public void createTable()
-        {
-            var strConnection = "server=localhost;uid=root;database=vendas";
-            var sqlString = $"CREATE TABLE {nomeTabela} (\r\n    id INT PRIMARY KEY AUTO_INCREMENT,\r\n    produto VARCHAR(50) NOT NULL,\r\n    modelo VARCHAR(50) NOT NULL,\r\n    metodo_pagamento varchar(20) NOT NULL,\r\n    troco DECIMAL(10, 2),\r\n    preco_final DECIMAL(10, 2),\r\n    hora_venda DATETIME DEFAULT CURRENT_TIMESTAMP\r\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-
-            using (MySqlConnection conexao = new MySqlConnection(strConnection))
-            {
-                using (MySqlCommand comando = new MySqlCommand(sqlString, conexao))
-                {
-
-                    try
-                    {
-                        conexao.Open();
-                        int linhasAfetadas = comando.ExecuteNonQuery();
-                        MessageBox.Show("Tabela Criada com Sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Ocorreu um erro ao inserir: {ex.Message}");
-                        Console.WriteLine(ex.Message);
-                    }
-
-                }
-            }
-
-
-        }
-
-        public void tableExist()
-        {
-            string connectionString = "server=localhost;uid=root;database=vendas";
-
-            // Nome da tabela a ser verificada
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                // Abra a conexão com o banco de dados
-                connection.Open();
-
-                // Consulta SQL para verificar a existência da tabela
-                string query = $"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = '{nomeTabela}'";
-
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                {
-                    // Execute a consulta
-                    int result = Convert.ToInt32(command.ExecuteScalar());
-
-                    if (result == 0)
-                    {
-                        MessageBox.Show($"A tabela {nomeTabela} não existe.");
-                        createTable();
-                    }
-                    else
-                    {
-                        //MessageBox.Show($"A tabela {nomeTabela} existe.");
-                    }
-                }
-            }
-        }
-
+       
         private void dinheiro_radio_CheckedChanged(object sender, EventArgs e)
         {
             if (debitoButton1.Checked)

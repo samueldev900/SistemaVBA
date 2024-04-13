@@ -35,6 +35,7 @@
             dataGridView1 = new DataGridView();
             deleteVenda_button = new Button();
             editVenda_button = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -111,11 +112,22 @@
             editVenda_button.UseVisualStyleBackColor = true;
             editVenda_button.Click += editVenda_button_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(436, 29);
+            button1.Name = "button1";
+            button1.Size = new Size(36, 28);
+            button1.TabIndex = 7;
+            button1.Text = "att";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // TelaPrincipal
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(895, 518);
+            Controls.Add(button1);
             Controls.Add(editVenda_button);
             Controls.Add(deleteVenda_button);
             Controls.Add(dataGridView1);
@@ -143,5 +155,6 @@
         private DataGridView dataGridView1;
         private Button deleteVenda_button;
         private Button editVenda_button;
+        private Button button1;
     }
 }

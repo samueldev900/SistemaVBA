@@ -74,7 +74,7 @@ namespace SistemaVBA
                         int linhasAfetadas = comando.ExecuteNonQuery();
                         ProdutoTextBox.Text = String.Empty;
                         MarcaTextBox.Text = String.Empty;
-                        ModeloTextBox.Text = String.Empty ;
+                        ModeloTextBox.Text = String.Empty;
                         costPriceTextBox.Text = String.Empty;
                         finalPricetextBox.Text = String.Empty;
                         IDtextBox.Text = String.Empty;
@@ -148,7 +148,7 @@ namespace SistemaVBA
             //SELECTION MODE
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
-            
+
             string sqlQuery = "SELECT id,nome,marca,modelo,preco_de_custo,preco_final,codigo_de_barras FROM produto";
 
             var connectionString = "server=localhost;uid=root;database=cadastro";
@@ -271,12 +271,10 @@ namespace SistemaVBA
                         dataGridView1.DataSource = dataTable;
                     }
                 }
-                }
-
             }
 
         }
 
-
+    }
 }
 
