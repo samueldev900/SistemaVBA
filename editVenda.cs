@@ -28,11 +28,26 @@ namespace SistemaVBA
         {
             string sqlQuery = $"SELECT * FROM {nomeTabela}";
 
+            List<editVenda> dadosDoBanco = new List<editVenda>();
+
+
             using (MySqlConnection conexao = new MySqlConnection(sqlConnect))
             {
 
                 using (MySqlCommand comando = new MySqlCommand(sqlQuery,conexao))
                 {
+                    try
+                    {
+                        conexao.Open();
+                        using (MySqlDataReader reader = comando.ExecuteReader())
+                        {
+
+                        }
+
+                    }catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
 
                 }
 

@@ -136,7 +136,7 @@ namespace SistemaVBA
 
         private void editVenda_button_Click(object sender, EventArgs e)
         {
-            var editVenda = new editVenda(stringId);
+            var editVenda = new editVenda(nomeTable,stringId);
             editVenda.TopMost = true;
             editVenda.ShowDialog();
         }
