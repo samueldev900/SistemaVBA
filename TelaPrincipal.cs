@@ -136,8 +136,9 @@ namespace SistemaVBA
 
         private void editVenda_button_Click(object sender, EventArgs e)
         {
-            string connectionString = "server=localhost;uid=root;database=vendas";
-            string sqlQuery = "UPDATE FROM ";
+            var editVenda = new editVenda(stringId);
+            editVenda.TopMost = true;
+            editVenda.ShowDialog();
         }
 
         public void tableExist()

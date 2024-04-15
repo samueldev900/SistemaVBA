@@ -56,10 +56,9 @@
             totalVendas_label.Font = new Font("Segoe UI", 40F);
             totalVendas_label.Location = new Point(575, 46);
             totalVendas_label.Name = "totalVendas_label";
-            totalVendas_label.Size = new Size(234, 72);
+            totalVendas_label.Size = new Size(205, 72);
             totalVendas_label.TabIndex = 1;
-            totalVendas_label.Text = "R$ 19.90";
-       
+            totalVendas_label.Text = "R$ 0.00";
             // 
             // novaVenda_button
             // 

@@ -32,3 +32,4 @@ C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\Siste
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.cadastrarProduto.resources
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.NovaVenda.resources
 C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.TelaPrincipal.resources
+C:\Users\samue\Meu Drive\Estudos\2. C#\SistemaVBA\obj\Debug\net8.0-windows\SistemaVBA.editVenda.resources
