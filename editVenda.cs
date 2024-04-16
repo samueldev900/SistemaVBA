@@ -91,7 +91,7 @@ namespace SistemaVBA
 
         private void update_button_Click(object sender, EventArgs e)
         {
-            string sqlQuery = $"UPDATE {nameTableGlobal} SET produto ={name_textBox.Text},modelo ={modelo_textBox.Text}, ";
+           
             if (dinheiro_radioButton.Checked)
             {
                 metodoPagamento = "Dinheiro";
@@ -117,14 +117,34 @@ namespace SistemaVBA
 
             using (MySqlConnection conexao = new MySqlConnection(sqlConnect))
             {
-                using (MySqlCommand comando = new MySqlCommand(sqlQuery,conexao))
+                string sqlQuery = $"UPDATE {nameTableGlobal} SET produto=@produtoValue, modelo=@modelo, metodo_pagamento=@metodoPagamento, troco=@troco, preco_final=@precoFinal";
+                using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
                 {
                     try
                     {
+                        comando.Parameters.AddWithValue("@produtoValue", name_textBox.Text);
+                        comando.Parameters.AddWithValue("@modelo", modelo_textBox.Text);
+                        comando.Parameters.AddWithValue("@metodoPagamento", metodoPagamento);
+                        comando.Parameters.AddWithValue("@troco", troco_textBox.Text);
+                        comando.Parameters.AddWithValue("@precoFinal", preco_textBox.Text);
 
+                        conexao.Open();
+                        int rowsAffected = comando.ExecuteNonQuery();
+                        MessageBox.Show("Produto atualizado com sucesso");
+                        this.Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conexao.Close();
                     }
                 }
             }
+
         }
     }
 }

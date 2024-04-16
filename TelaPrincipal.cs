@@ -138,10 +138,15 @@ namespace SistemaVBA
         private void editVenda_button_Click(object sender, EventArgs e)
         {
             var editVenda = new editVenda(nomeTable,stringId);
+            editVenda.FormClosed += editVenda_FormClosed;
             editVenda.TopMost = true;
             editVenda.ShowDialog();
         }
-
+        private void editVenda_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            atualizar(); // Chama a função atualizar() quando a janela NovaVenda for fechada
+            somarVenda();
+        }
         public void tableExist()
         {
             string connectionString = "server=localhost;uid=root;database=vendas";
