@@ -79,6 +79,19 @@ namespace SistemaVBA
                         dataGridView1.Columns[1].Width = 230;
                         dataGridView1.Columns[6].Width = 160;
 
+                        DataGridViewButtonColumn editButton = new DataGridViewButtonColumn();
+                        dataGridView1.Columns.Insert(7, editButton);
+                        editButton.Text = "Editar";
+                        editButton.UseColumnTextForButtonValue = true;
+
+
+                        DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
+                        dataGridView1.Columns.Insert(8, deleteButton);
+                        deleteButton.Text = "Excluir";
+                        deleteButton.UseColumnTextForButtonValue = true;
+
+
+
                         dataGridView1.Columns[0].HeaderText = "ID";
                         dataGridView1.Columns[1].HeaderText = "Nome";
                         dataGridView1.Columns[2].HeaderText = "Modelo";
@@ -86,6 +99,18 @@ namespace SistemaVBA
                         dataGridView1.Columns[4].HeaderText = "Troco";
                         dataGridView1.Columns[5].HeaderText = "Preço";
                         dataGridView1.Columns[6].HeaderText = "Hora da Venda";
+                        dataGridView1.Columns[6].HeaderText = "Hora da Venda";
+                        dataGridView1.Columns[7].HeaderText = "Editar";
+                        dataGridView1.Columns[8].HeaderText = "Delete";
+
+
+                        // Criar a nova coluna
+
+
+                        // Inserir a nova coluna na posição desejada
+
+
+
 
                     }
                 }
@@ -101,7 +126,12 @@ namespace SistemaVBA
 
             var id = row.Cells["ID"].Value;
             stringId = Convert.ToString(id);
-            MessageBox.Show(stringId);
+
+            if (e.ColumnIndex == 7 && e.RowIndex >= 0) // Verifica se a célula clicada está na coluna dos botões e não é um cabeçalho
+            {
+                // Coloque aqui a função que você deseja executar quando o botão for clicado
+                MessageBox.Show($"Botão na linha {e.RowIndex} clicado, Id dessa Linha: {stringId}");
+            }
         }
 
         private void deleteVenda_button_Click(object sender, EventArgs e)
@@ -282,7 +312,6 @@ namespace SistemaVBA
             }
 
         }
-
 
     }
 

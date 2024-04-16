@@ -66,7 +66,6 @@ namespace SistemaVBA
                                 {
                                     pix_radioButton.Checked = true;
                                 }
-                                MessageBox.Show(reader.GetString(2));
 
 
 

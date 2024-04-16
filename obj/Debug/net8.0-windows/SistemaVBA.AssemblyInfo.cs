@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemaVBA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b76192540358c9942b75119afd97025bc5cb1598")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51fc1026785ffb71c72f716cb7f64f192d37b4cb")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemaVBA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemaVBA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

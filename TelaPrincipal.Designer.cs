@@ -32,10 +32,10 @@
             totalVendas_label = new Label();
             novaVenda_button = new Button();
             cadastroProduto_button = new Button();
-            dataGridView1 = new DataGridView();
             deleteVenda_button = new Button();
             editVenda_button = new Button();
             button1 = new Button();
+            dataGridView1 = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -80,18 +80,6 @@
             cadastroProduto_button.UseVisualStyleBackColor = true;
             cadastroProduto_button.Click += cadastroProduto_button_Click;
             // 
-            // dataGridView1
-            // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.BackgroundColor = SystemColors.Control;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 163);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.Size = new Size(824, 330);
-            dataGridView1.TabIndex = 4;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
-            // 
             // deleteVenda_button
             // 
             deleteVenda_button.Location = new Point(33, 89);
@@ -121,6 +109,18 @@
             button1.Text = "att";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.BackgroundColor = SystemColors.Control;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(21, 176);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.Size = new Size(824, 330);
+            dataGridView1.TabIndex = 4;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // TelaPrincipal
             // 
@@ -152,9 +152,9 @@
         private Label totalVendas_label;
         private Button novaVenda_button;
         private Button cadastroProduto_button;
-        private DataGridView dataGridView1;
         private Button deleteVenda_button;
         private Button editVenda_button;
         private Button button1;
+        private DataGridView dataGridView1;
     }
 }
