@@ -101,6 +101,7 @@ namespace SistemaVBA
 
             var id = row.Cells["ID"].Value;
             stringId = Convert.ToString(id);
+            MessageBox.Show(stringId);
         }
 
         private void deleteVenda_button_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -151,15 +152,15 @@ namespace SistemaVBA
         {
             if (debitoButton1.Checked)
             {
-                metodoPagamento = "Débito";
+                metodoPagamento = "Debito";
             }
         }
 
         private void credito_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (debitoButton1.Checked)
+            if (credito_radioButton.Checked)
             {
-                metodoPagamento = "Crédito";
+                metodoPagamento = "Credito";
             }
         }
 
@@ -243,32 +244,38 @@ namespace SistemaVBA
                     troco = valorRecebidoInt - Convert.ToDecimal(produto[1]);
                 }
 
-                var sql = $"INSERT INTO {nomeTabela} (id, produto, modelo,metodo_pagamento,troco, preco_final) VALUES (NULL, @produto, modelo,@metodo_pagamento,@troco, @preco_final)";
-                using (MySqlConnection conexao = new MySqlConnection(connectionString))
+                try
                 {
-                    conexao.Open();
-                    using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                    var sql = $"INSERT INTO {nomeTabela} (id, produto, modelo,metodo_pagamento,troco, preco_final) VALUES (NULL, @produto, @modelo,@metodo_pagamento,@troco, @preco_final)";
+                    using (MySqlConnection conexao = new MySqlConnection(connectionString))
                     {
-                        comando.Parameters.AddWithValue("@produto", produto[0]);
-                        //comando.Parameters.AddWithValue("@modelo", modelo);
-                        comando.Parameters.AddWithValue("@metodo_pagamento", metodoPagamento);
-                        comando.Parameters.AddWithValue("@troco", troco);
-                        comando.Parameters.AddWithValue("@preco_final", produto[1]); // Suponho que produto[1] seja o preço final
-
-                        // Executa o comando
-                        int linhasAfetadas = comando.ExecuteNonQuery();
-
-                        // Verifica se a inserção foi bem sucedida
-                        if (linhasAfetadas > 0)
+                        conexao.Open();
+                        using (MySqlCommand comando = new MySqlCommand(sql, conexao))
                         {
-                            MessageBox.Show("Venda bem sucedida!");
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Falha na inserção");
+                            comando.Parameters.AddWithValue("@produto", produto[0]);
+                            comando.Parameters.AddWithValue("@modelo", modelo);
+                            comando.Parameters.AddWithValue("@metodo_pagamento", metodoPagamento);
+                            comando.Parameters.AddWithValue("@troco", troco);
+                            comando.Parameters.AddWithValue("@preco_final", produto[1]); // Suponho que produto[1] seja o preço final
+
+                            // Executa o comando
+                            int linhasAfetadas = comando.ExecuteNonQuery();
+
+                            // Verifica se a inserção foi bem sucedida
+                            if (linhasAfetadas > 0)
+                            {
+                                MessageBox.Show("Venda bem sucedida!");
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Falha na inserção");
+                            }
                         }
                     }
+                }catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
                 }
 
             }

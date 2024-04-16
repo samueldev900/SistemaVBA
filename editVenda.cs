@@ -15,36 +15,69 @@ namespace SistemaVBA
 {
     public partial class editVenda : Form
     {
-        string sqlConnect = "server=localhost;uid=root;database=vendas";
+        string idGlobal;
+        string nameTableGlobal;
+        string metodoPagamento;
 
-        public editVenda(string nomeTable,string ID)
+        string sqlConnect = "server=localhost;uid=root;database=vendas";
+        public editVenda(string nomeTable, string idProduct)
         {
             InitializeComponent();
-            Connect(nomeTable);  
+            Connect(nomeTable, idProduct);
+            idGlobal = idProduct;
+            nameTableGlobal = nomeTable;
         }
-        
 
-        public void Connect(string nomeTabela)
+
+        public void Connect(string nomeTabela, string ID)
         {
-            string sqlQuery = $"SELECT * FROM {nomeTabela}";
-
-            List<editVenda> dadosDoBanco = new List<editVenda>();
-
+            string sqlQuery = $"select produto,modelo,metodo_pagamento,troco,preco_final from {nomeTabela} where id = {ID}";
 
             using (MySqlConnection conexao = new MySqlConnection(sqlConnect))
             {
 
-                using (MySqlCommand comando = new MySqlCommand(sqlQuery,conexao))
+                using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
                 {
                     try
                     {
                         conexao.Open();
                         using (MySqlDataReader reader = comando.ExecuteReader())
                         {
+                            while (reader.Read())
+                            {
 
+                                name_textBox.Text = reader.GetString(0);
+                                modelo_textBox.Text = reader.GetString(1);
+
+                                if (reader.GetString(2) == "Dinheiro")
+                                {
+                                    dinheiro_radioButton.Checked = true;
+                                }
+                                else if (reader.GetString(2) == "Debito")
+                                {
+                                    debito_radioButton.Checked = true;
+
+                                }
+                                else if (reader.GetString(2) == "Credito")
+                                {
+                                    credito_radioButton.Checked = true;
+                                }
+                                else
+                                {
+                                    pix_radioButton.Checked = true;
+                                }
+                                MessageBox.Show(reader.GetString(2));
+
+
+
+                                troco_textBox.Text = Convert.ToString(reader.GetDecimal(3));
+                                preco_textBox.Text = Convert.ToString(reader.GetDecimal(4));
+
+                            }
                         }
 
-                    }catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
                     }
@@ -54,6 +87,44 @@ namespace SistemaVBA
             }
 
 
+        }
+
+        private void update_button_Click(object sender, EventArgs e)
+        {
+            string sqlQuery = $"UPDATE {nameTableGlobal} SET produto ={name_textBox.Text},modelo ={modelo_textBox.Text}, ";
+            if (dinheiro_radioButton.Checked)
+            {
+                metodoPagamento = "Dinheiro";
+            }
+            else if (credito_radioButton.Checked)
+            {
+                metodoPagamento = "Credito";
+            }
+            else if (debito_radioButton.Checked)
+            {
+                metodoPagamento = "Debito";
+
+            }
+            else if (pix_radioButton.Checked)
+            {
+                metodoPagamento = "Pix";
+
+            }
+            else
+            {
+                MessageBox.Show("Por Favor Selecione uma opção.");
+            }
+
+            using (MySqlConnection conexao = new MySqlConnection(sqlConnect))
+            {
+                using (MySqlCommand comando = new MySqlCommand(sqlQuery,conexao))
+                {
+                    try
+                    {
+
+                    }
+                }
+            }
         }
     }
 }
