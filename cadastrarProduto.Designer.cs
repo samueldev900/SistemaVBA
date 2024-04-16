@@ -44,6 +44,7 @@
             dataGridView1 = new DataGridView();
             edit_botton = new Button();
             delete_button = new Button();
+            clean_button = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -58,7 +59,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(12, 358);
+            button1.Location = new Point(12, 407);
             button1.Name = "button1";
             button1.Size = new Size(189, 49);
             button1.TabIndex = 1;
@@ -79,7 +80,6 @@
             MarcaTextBox.Name = "MarcaTextBox";
             MarcaTextBox.Size = new Size(189, 23);
             MarcaTextBox.TabIndex = 4;
-            MarcaTextBox.TextChanged += textBox2_TextChanged;
             // 
             // label2
             // 
@@ -89,7 +89,6 @@
             label2.Size = new Size(40, 15);
             label2.TabIndex = 3;
             label2.Text = "Marca";
-            label2.Click += label2_Click;
             // 
             // ModeloTextBox
             // 
@@ -97,7 +96,6 @@
             ModeloTextBox.Name = "ModeloTextBox";
             ModeloTextBox.Size = new Size(189, 23);
             ModeloTextBox.TabIndex = 6;
-            ModeloTextBox.TextChanged += textBox3_TextChanged;
             // 
             // label3
             // 
@@ -187,12 +185,23 @@
             delete_button.UseVisualStyleBackColor = true;
             delete_button.Click += delete_button_Click;
             // 
+            // clean_button
+            // 
+            clean_button.Location = new Point(12, 337);
+            clean_button.Name = "clean_button";
+            clean_button.Size = new Size(189, 49);
+            clean_button.TabIndex = 16;
+            clean_button.Text = "Limpar Campos";
+            clean_button.UseVisualStyleBackColor = true;
+            clean_button.Click += clean_button_Click;
+            // 
             // cadastrarProduto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Highlight;
             ClientSize = new Size(949, 541);
+            Controls.Add(clean_button);
             Controls.Add(delete_button);
             Controls.Add(edit_botton);
             Controls.Add(dataGridView1);
@@ -235,5 +244,6 @@
         private DataGridView dataGridView1;
         private Button edit_botton;
         private Button delete_button;
+        private Button clean_button;
     }
 }

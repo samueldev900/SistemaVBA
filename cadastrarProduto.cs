@@ -11,37 +11,20 @@ using System.Collections.Generic;
 using System.Reflection;
 using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 using System.Text.RegularExpressions;
+using System.Net.Http;
 
 
 namespace SistemaVBA
 {
 
-
-
     public partial class cadastrarProduto : Form
     {
-        object idValue;
+        string idValue;
+        string stringConnect = "server=localhost;uid=root;database=cadastro";
         public cadastrarProduto()
         {
             InitializeComponent();
-
-            var strConnection = new Connect();
-            var conexao = new MySqlConnection(strConnection.GetConnectionString());
-            try
-            {
-                conexao.Open();
-                MessageBox.Show("Conectado com Sucesso");
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro ao conectar: " + ex.Message);
-            }
-            finally
-            {
-                //conexao.Close();
-            }
         }
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -55,9 +38,8 @@ namespace SistemaVBA
             string sql = "INSERT INTO produto (nome, marca, modelo, preco_de_custo, preco_final, codigo_de_barras) " +
                          "VALUES (@Nome, @Marca, @Modelo, @PrecoDeCusto, @PrecoFinal, @CodigoDeBarras)";
 
-            var connectionString = "server=localhost;uid=root;database=cadastro";
 
-            using (MySqlConnection conexao = new MySqlConnection(connectionString))
+            using (MySqlConnection conexao = new MySqlConnection(stringConnect))
             {
                 using (MySqlCommand comando = new MySqlCommand(sql, conexao))
                 {
@@ -72,12 +54,7 @@ namespace SistemaVBA
                     {
                         conexao.Open();
                         int linhasAfetadas = comando.ExecuteNonQuery();
-                        ProdutoTextBox.Text = String.Empty;
-                        MarcaTextBox.Text = String.Empty;
-                        ModeloTextBox.Text = String.Empty;
-                        costPriceTextBox.Text = String.Empty;
-                        finalPricetextBox.Text = String.Empty;
-                        IDtextBox.Text = String.Empty;
+                        LimparCampos();
                         MessageBox.Show("Inserido com sucesso!");
                         atualizar();
                     }
@@ -85,52 +62,38 @@ namespace SistemaVBA
                     {
                         MessageBox.Show($"Ocorreu um erro ao inserir: {ex.Message}");
                     }
+                    finally
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }
 
-
-        private void label2_Click(object sender, EventArgs e)
+        private void LimparCampos()
         {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-            // Seu código para lidar com o evento TextChanged de textBox3 aqui
+            ProdutoTextBox.Text = String.Empty;
+            MarcaTextBox.Text = String.Empty;
+            ModeloTextBox.Text = String.Empty;
+            costPriceTextBox.Text = String.Empty;
+            finalPricetextBox.Text = String.Empty;
+            IDtextBox.Text = String.Empty;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int index = e.RowIndex;
-            // Obtenha a referência para a linha selecionada
             DataGridViewRow row = dataGridView1.Rows[index];
 
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-
-                // Obtém o valor da célula da coluna "ID" da linha clicada
                 idValue = row.Cells[0].Value.ToString();
 
-                // Verifica se o valor é válido e não nulo
                 if (idValue != null)
                 {
-                    // Converte o valor para o tipo desejado (por exemplo, int)
                     int id = Convert.ToInt32(idValue);
-
-                    // Agora você pode usar o ID capturado conforme necessário
-                    // Por exemplo, exibir em uma caixa de mensagem
-                    //MessageBox.Show("ID selecionado: " + id.ToString());
                 }
             }
-
-            // Captura o ID do Produto  ProdutoTextBox.Text = row.Cells[0].Value.ToString();
-
-
 
             ProdutoTextBox.Text = row.Cells[1].Value.ToString();
             MarcaTextBox.Text = row.Cells[2].Value.ToString();
@@ -144,16 +107,12 @@ namespace SistemaVBA
         private void cadastrarProduto_Load(object sender, EventArgs e)
         {
             DataTable table = new DataTable();
-
-            //SELECTION MODE
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
             string sqlQuery = "SELECT id,nome,marca,modelo,preco_de_custo,preco_final,codigo_de_barras FROM produto";
 
-            var connectionString = "server=localhost;uid=root;database=cadastro";
-
-            using (MySqlConnection conexao = new MySqlConnection(connectionString))
+            using (MySqlConnection conexao = new MySqlConnection(stringConnect))
             {
                 using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
                 {
@@ -179,17 +138,9 @@ namespace SistemaVBA
             }
 
         }
-
-
-        private void TimerAtualizacao_Tick(object sender, EventArgs e)
-        {
-            // Implemente o código de atualização dos dados aqui
-        }
-
         private void delete_button_Click(object sender, EventArgs e)
         {
-            var strConnection = new Connect();
-            var conexao = new MySqlConnection(strConnection.GetConnectionString());
+            var conexao = new MySqlConnection(stringConnect);
             var sqlQuery = "DELETE FROM produto WHERE id =" + idValue;
             using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
             {
@@ -199,14 +150,11 @@ namespace SistemaVBA
                 {
                     conexao.Open();
                     int rowsAffected = comando.ExecuteNonQuery();
-                    // Faça o que desejar com a informação sobre as linhas afetadas, se necessário.
                     MessageBox.Show("Deletado com Sucesso");
                     atualizar();
-
                 }
                 catch (Exception ex)
                 {
-                    // Lidar com exceções, se houver.
                     Console.WriteLine("Erro: " + ex.Message);
                 }
                 finally
@@ -219,8 +167,7 @@ namespace SistemaVBA
 
         private void edit_botton_Click(object sender, EventArgs e)
         {
-            var strConnection = new Connect();
-            var conexao = new MySqlConnection(strConnection.GetConnectionString());
+            var conexao = new MySqlConnection(stringConnect);
             var sqlQuery = "UPDATE `cadastro`.`produto` SET `nome` = '" + ProdutoTextBox.Text + "', `marca` = '" + MarcaTextBox.Text + "', `preco_de_custo` = '" + costPriceTextBox.Text + "', `preco_final` = '" + finalPricetextBox.Text + "', `codigo_de_barras` = '" + IDtextBox.Text + "' WHERE id = " + idValue;
 
             using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
@@ -229,13 +176,11 @@ namespace SistemaVBA
                 {
                     conexao.Open();
                     int rowsAffected = comando.ExecuteNonQuery();
-                    // Faça o que desejar com a informação sobre as linhas afetadas, se necessário.
                     MessageBox.Show("Produto atualizado com Sucesso");
                     atualizar();
                 }
                 catch (Exception ex)
                 {
-                    // Lidar com exceções, se houver.
                     Console.WriteLine("Erro: " + ex.Message);
                 }
                 finally
@@ -250,7 +195,6 @@ namespace SistemaVBA
         {
             DataTable table = new DataTable();
 
-            //SELECTION MODE
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
@@ -267,7 +211,6 @@ namespace SistemaVBA
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
 
-                        // Associe o DataTable ao DataGridView
                         dataGridView1.DataSource = dataTable;
                     }
                 }
@@ -275,6 +218,10 @@ namespace SistemaVBA
 
         }
 
+        private void clean_button_Click(object sender, EventArgs e)
+        {
+            LimparCampos();
+        }
     }
 }
 
