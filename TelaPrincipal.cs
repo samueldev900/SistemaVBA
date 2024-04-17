@@ -21,6 +21,7 @@ namespace SistemaVBA
         public string hora;
         public decimal totalVendas;
         public decimal somaVendas;
+        string connectionString = "server=localhost;uid=root;database=vendas";
 
         public TelaPrincipal()
         {
@@ -45,25 +46,24 @@ namespace SistemaVBA
         private void novaVenda_button_Click(object sender, EventArgs e)
         {
             var cadastro = new NovaVenda();
-            cadastro.FormClosed += NovaVenda_FormClosed; // Assim que a janela for fechada, chama a função NovaVenda_FormClosed
+            cadastro.FormClosed += NovaVenda_FormClosed;
             cadastro.TopMost = true;
             cadastro.ShowDialog();
         }
 
         private void NovaVenda_FormClosed(object sender, FormClosedEventArgs e)
         {
-            atualizar(); // Chama a função atualizar() quando a janela NovaVenda for fechada
+            atualizar(); 
             somarVenda();
         }
         public void TelaPrincipal_Load(object sender, EventArgs e)
         {
             DataTable table = new DataTable();
 
-            // SELECTION MODE
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
-            string connectionString = "server=localhost;uid=root;database=vendas";
+            
             string sqlQuery = $"SELECT * FROM table_{data}";
 
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
@@ -75,22 +75,20 @@ namespace SistemaVBA
                     {
                         adapter.Fill(table);
                         dataGridView1.DataSource = table;
-                        dataGridView1.Columns[0].Width = 30;
-                        dataGridView1.Columns[1].Width = 230;
-                        dataGridView1.Columns[6].Width = 160;
 
                         DataGridViewButtonColumn editButton = new DataGridViewButtonColumn();
                         dataGridView1.Columns.Insert(7, editButton);
                         editButton.Text = "Editar";
                         editButton.UseColumnTextForButtonValue = true;
 
-
                         DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn();
                         dataGridView1.Columns.Insert(8, deleteButton);
                         deleteButton.Text = "Excluir";
                         deleteButton.UseColumnTextForButtonValue = true;
 
-
+                        dataGridView1.Columns[0].Width = 30;
+                        dataGridView1.Columns[1].Width = 230;
+                        dataGridView1.Columns[6].Width = 160;
 
                         dataGridView1.Columns[0].HeaderText = "ID";
                         dataGridView1.Columns[1].HeaderText = "Nome";
@@ -102,16 +100,6 @@ namespace SistemaVBA
                         dataGridView1.Columns[6].HeaderText = "Hora da Venda";
                         dataGridView1.Columns[7].HeaderText = "Editar";
                         dataGridView1.Columns[8].HeaderText = "Delete";
-
-
-                        // Criar a nova coluna
-
-
-                        // Inserir a nova coluna na posição desejada
-
-
-
-
                     }
                 }
             }
@@ -127,43 +115,50 @@ namespace SistemaVBA
             var id = row.Cells["ID"].Value;
             stringId = Convert.ToString(id);
 
-            if (e.ColumnIndex == 7 && e.RowIndex >= 0) // Verifica se a célula clicada está na coluna dos botões e não é um cabeçalho
             {
-                // Coloque aqui a função que você deseja executar quando o botão for clicado
                 MessageBox.Show($"Botão na linha {e.RowIndex} clicado, Id dessa Linha: {stringId}");
             }
         }
 
         private void deleteVenda_button_Click(object sender, EventArgs e)
         {
-            string connectionString = "server=localhost;uid=root;database=vendas";
+            DialogResult result = MessageBox.Show("Deseja excluir o item ?", "Excluir Venda", MessageBoxButtons.YesNo,MessageBoxIcon.Question);
 
-            string sqlQuery = $"DELETE FROM table_{data} WHERE id={stringId}";
-
-            using (MySqlConnection conexao = new MySqlConnection(connectionString))
+            if (result == DialogResult.Yes)
             {
-                try
+                string sqlQuery = $"DELETE FROM table_{data} WHERE id={stringId}";
+
+                using (MySqlConnection conexao = new MySqlConnection(connectionString))
                 {
-                    conexao.Open(); // Abre a conexão aqui
-
-                    using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
+                    try
                     {
-                        int rowsAffected = comando.ExecuteNonQuery();
-                        // Faça o que desejar com a informação sobre as linhas afetadas, se necessário.
-                        MessageBox.Show("Deletado com Sucesso");
-                        atualizar();
-                        somarVenda();
+                        conexao.Open();
 
+                        using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
+                        {
+                            int rowsAffected = comando.ExecuteNonQuery();
+                            MessageBox.Show("Deletado com Sucesso");
+                            atualizar();
+                            somarVenda();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Erro: " + ex.Message);
+                    }
+                    finally
+                    {
+                        conexao.Close();
                     }
                 }
-                catch (Exception ex)
-                {
-                    // Lidar com exceções, se houver.
-                    Console.WriteLine("Erro: " + ex.Message);
-                }
-                // Não é necessário abrir novamente a conexão aqui
+            }
+            else if (result == DialogResult.No)
+            {
+                MessageBox.Show("Operação cancelada");
             }
         }
+
+
 
         private void editVenda_button_Click(object sender, EventArgs e)
         {
@@ -174,21 +169,15 @@ namespace SistemaVBA
         }
         private void editVenda_FormClosed(object sender, FormClosedEventArgs e)
         {
-            atualizar(); // Chama a função atualizar() quando a janela NovaVenda for fechada
+            atualizar();
             somarVenda();
         }
         public void tableExist()
         {
-            string connectionString = "server=localhost;uid=root;database=vendas";
-
-            // Nome da tabela a ser verificada
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                // Abra a conexão com o banco de dados
                 connection.Open();
 
-                // Consulta SQL para verificar a existência da tabela
                 string query = $"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = '{nomeTable}'";
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -207,15 +196,14 @@ namespace SistemaVBA
                     }
                 }
             }
-
         }
+
 
         public void createTable()
         {
-            var strConnection = "server=localhost;uid=root;database=vendas";
             var sqlString = $"CREATE TABLE {nomeTable} (id INT PRIMARY KEY AUTO_INCREMENT, produto VARCHAR(50) NOT NULL, modelo VARCHAR(50) NOT NULL, metodo_pagamento varchar(20) NOT NULL, troco DECIMAL(10, 2), preco_final DECIMAL(10, 2), hora_venda DATETIME DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
 
-            using (MySqlConnection conexao = new MySqlConnection(strConnection))
+            using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
                 using (MySqlCommand comando = new MySqlCommand(sqlString, conexao))
                 {
@@ -234,21 +222,17 @@ namespace SistemaVBA
 
                 }
             }
-
-
         }
 
         private void atualizar()
         {
             DataTable table = new DataTable();
 
-            //SELECTION MODE
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
             string sqlQuery = $"SELECT id,produto,modelo,metodo_pagamento,troco,preco_final,hora_venda FROM {nomeTable}";
 
-            var connectionString = "server=localhost;uid=root;database=vendas";
 
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
@@ -259,7 +243,6 @@ namespace SistemaVBA
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
 
-                        // Associe o DataTable ao DataGridView
                         dataGridView1.DataSource = dataTable;
                     }
                 }
@@ -276,7 +259,6 @@ namespace SistemaVBA
         private void somarVenda()
         {
             somaVendas = 0;
-            var connectionString = "server=localhost;uid=root;database=vendas";
             string sql = $"SELECT preco_final from {nomeTable}";
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
@@ -291,8 +273,8 @@ namespace SistemaVBA
                             while (reader.Read())
                             {
 
-                                decimal precoFinal = reader.GetDecimal(0); // Obtém o valor da primeira coluna (0)
-                                                                           // Faça o que precisar com o valor obtido, como somar ou exibir
+                                decimal precoFinal = reader.GetDecimal(0);
+                                                                           
                                 somaVendas += precoFinal;
                             }
                             if(somaVendas > totalVendas)
@@ -300,7 +282,6 @@ namespace SistemaVBA
                                 totalVendas = somaVendas;
                                 totalVendas_label.Text = $"R$ {totalVendas}";
                             }
-                            
                         }
                     }
                     catch (Exception ex)
@@ -310,9 +291,6 @@ namespace SistemaVBA
                     }
                 }
             }
-
         }
-
     }
-
 }

@@ -187,7 +187,6 @@
             label3.Size = new Size(80, 37);
             label3.TabIndex = 16;
             label3.Text = "Total:";
-            label3.Click += label3_Click;
             // 
             // nomeProduto_label
             // 

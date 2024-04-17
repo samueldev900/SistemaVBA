@@ -1,15 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SistemaVBA
 {
@@ -91,7 +81,7 @@ namespace SistemaVBA
 
 
         }
-  
+
 
 
         private void NovaVenda_Load(object sender, EventArgs e)
@@ -130,7 +120,7 @@ namespace SistemaVBA
             }
         }
 
-       
+
         private void dinheiro_radio_CheckedChanged(object sender, EventArgs e)
         {
             if (debitoButton1.Checked)
@@ -209,24 +199,21 @@ namespace SistemaVBA
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
-            if(!dinheiro_radio.Checked && !debitoButton1.Checked && !credito_radioButton.Checked && !pix_radioButton.Checked)
+
+            if (!dinheiro_radio.Checked && !debitoButton1.Checked && !credito_radioButton.Checked && !pix_radioButton.Checked)
             {
                 MessageBox.Show("Por favor selecione um método de Pagamento");
             }
-            else if(textBox2.Text.Length == 0 && textBox5.Text.Length == 0)
+            else if (textBox2.Text.Length == 0 && textBox5.Text.Length == 0)
             {
                 MessageBox.Show("Por favor, Selecione um produto");
 
             }
-            else if(dinheiro_radio.Checked && valorRecebidoTextBox.Text.Length == 0)
+            else if (dinheiro_radio.Checked && valorRecebidoTextBox.Text.Length == 0)
             {
                 MessageBox.Show("Informe o Valor Recebido");
             }
@@ -265,18 +252,22 @@ namespace SistemaVBA
                             if (linhasAfetadas > 0)
                             {
                                 MessageBox.Show("Venda bem sucedida!");
+                                conexao.Close();
                                 this.Close();
                             }
                             else
                             {
                                 MessageBox.Show("Falha na inserção");
+                                conexao.Close();
                             }
                         }
                     }
-                }catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
+
 
             }
         }

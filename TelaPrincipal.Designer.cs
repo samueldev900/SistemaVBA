@@ -118,7 +118,7 @@
             dataGridView1.Location = new Point(21, 176);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.Size = new Size(824, 330);
+            dataGridView1.Size = new Size(1025, 330);
             dataGridView1.TabIndex = 4;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -126,7 +126,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(895, 518);
+            ClientSize = new Size(1067, 518);
             Controls.Add(button1);
             Controls.Add(editVenda_button);
             Controls.Add(deleteVenda_button);

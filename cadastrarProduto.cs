@@ -140,28 +140,38 @@ namespace SistemaVBA
         }
         private void delete_button_Click(object sender, EventArgs e)
         {
-            var conexao = new MySqlConnection(stringConnect);
-            var sqlQuery = $"DELETE FROM produto WHERE id ={idValue}";
-            using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
-            {
-                comando.Parameters.AddWithValue("@IdValue", idValue);
 
-                try
+            DialogResult resultado = MessageBox.Show("Tem certeza que deseja excluir?", "Confirmação", MessageBoxButtons.YesNo);
+            if (resultado == DialogResult.Yes)
+            {
+                var conexao = new MySqlConnection(stringConnect);
+                var sqlQuery = $"DELETE FROM produto WHERE id ={idValue}";
+                using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
                 {
-                    conexao.Open();
-                    int rowsAffected = comando.ExecuteNonQuery();
-                    MessageBox.Show("Deletado com Sucesso");
-                    atualizar();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro: " + ex.Message);
-                }
-                finally
-                {
-                    conexao.Close();
+                    comando.Parameters.AddWithValue("@IdValue", idValue);
+
+                    try
+                    {
+                        conexao.Open();
+                        int rowsAffected = comando.ExecuteNonQuery();
+                        MessageBox.Show("Deletado com Sucesso");
+                        atualizar();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Erro: " + ex.Message);
+                    }
+                    finally
+                    {
+                        conexao.Close();
+                    }
                 }
             }
+            else if(resultado == DialogResult.No)
+            {
+                MessageBox.Show("Exclusão Abortada");
+            }
+           
 
         }
 
