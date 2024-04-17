@@ -27,7 +27,7 @@ namespace SistemaVBA
         {
             InitializeComponent();
             data = DateTime.Now.ToString("ddMMyyyy");
-            hora = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
+            hora = DateTime.Now.ToString("HH:mm");
             nomeTable = $"table_{data}";
 
             tableExist();
@@ -174,26 +174,33 @@ namespace SistemaVBA
         }
         public void tableExist()
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
-                connection.Open();
 
                 string query = $"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = '{nomeTable}'";
 
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                try
                 {
-                    // Execute a consulta
-                    int result = Convert.ToInt32(command.ExecuteScalar());
+                    conexao.Open();
 
-                    if (result == 0)
+                    using (MySqlCommand command = new MySqlCommand(query, conexao))
                     {
-                        MessageBox.Show($"A tabela {nomeTable} não existe.");
-                        createTable();
+                        // Execute a consulta
+                        int result = Convert.ToInt32(command.ExecuteScalar());
+
+                        if (result == 0)
+                        {
+                            createTable();
+                        }
+
                     }
-                    else
-                    {
-                        MessageBox.Show($"A tabela {nomeTable} existe.");
-                    }
+                }catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    conexao.Close();
                 }
             }
         }
@@ -201,7 +208,7 @@ namespace SistemaVBA
 
         public void createTable()
         {
-            var sqlString = $"CREATE TABLE {nomeTable} (id INT PRIMARY KEY AUTO_INCREMENT, produto VARCHAR(50) NOT NULL, modelo VARCHAR(50) NOT NULL, metodo_pagamento varchar(20) NOT NULL, troco DECIMAL(10, 2), preco_final DECIMAL(10, 2), hora_venda DATETIME DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+            var sqlString = $"CREATE TABLE {nomeTable} (id INT PRIMARY KEY AUTO_INCREMENT, produto VARCHAR(50) NOT NULL, modelo VARCHAR(50) NOT NULL, metodo_pagamento varchar(20) NOT NULL, troco DECIMAL(10, 2), preco_final DECIMAL(10, 2), hora_venda varchar(10)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
 
             using (MySqlConnection conexao = new MySqlConnection(connectionString))
             {
@@ -212,7 +219,6 @@ namespace SistemaVBA
                     {
                         conexao.Open();
                         int linhasAfetadas = comando.ExecuteNonQuery();
-                        MessageBox.Show("Tabela Criada com Sucesso!");
                     }
                     catch (Exception ex)
                     {

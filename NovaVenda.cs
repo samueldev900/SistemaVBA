@@ -18,7 +18,7 @@ namespace SistemaVBA
         {
             InitializeComponent();
             data = DateTime.Today.ToString("ddMMyyyy");
-            hora = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString();
+            hora = DateTime.Now.ToString("HH:mm");
             nomeTabela = $"table_{data}";
 
 
@@ -89,7 +89,6 @@ namespace SistemaVBA
 
             DataTable table = new DataTable();
 
-            //SELECTION MODE
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
 
@@ -159,7 +158,6 @@ namespace SistemaVBA
             if (pix_radioButton.Checked)
             {
                 metodoPagamento = "Pix";
-
             }
 
         }
@@ -170,30 +168,24 @@ namespace SistemaVBA
         }
         private void valorRecebidoTextBox_TextChanged(object sender, EventArgs e)
         {
-            // Obtém o texto atual do textbox
             string texto = valorRecebidoTextBox.Text;
             decimal valorRecebidoInt = 0;
 
-            // Verifica se o texto não está vazio
             if (!string.IsNullOrEmpty(texto))
             {
                 valorRecebidoInt = decimal.Parse(texto);
             }
 
-            // Calcula o troco
 
             decimal troco = valorRecebidoInt - valorProduto;
 
-            // Atualiza o texto do label
             trocoLabel.Text = $"Troco: R$ {troco}";
         }
 
         private void valorRecebidoTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Verifica se o caractere digitado não é um número ou a tecla backspace
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
             {
-                // Cancela a tecla pressionada
                 e.Handled = true;
 
             }
@@ -233,7 +225,7 @@ namespace SistemaVBA
 
                 try
                 {
-                    var sql = $"INSERT INTO {nomeTabela} (id, produto, modelo,metodo_pagamento,troco, preco_final) VALUES (NULL, @produto, @modelo,@metodo_pagamento,@troco, @preco_final)";
+                    var sql = $"INSERT INTO {nomeTabela} (id, produto, modelo,metodo_pagamento,troco, preco_final,hora_venda) VALUES (NULL, @produto, @modelo,@metodo_pagamento,@troco, @preco_final,@horaVenda)";
                     using (MySqlConnection conexao = new MySqlConnection(connectionString))
                     {
                         conexao.Open();
@@ -243,12 +235,11 @@ namespace SistemaVBA
                             comando.Parameters.AddWithValue("@modelo", modelo);
                             comando.Parameters.AddWithValue("@metodo_pagamento", metodoPagamento);
                             comando.Parameters.AddWithValue("@troco", troco);
-                            comando.Parameters.AddWithValue("@preco_final", produto[1]); // Suponho que produto[1] seja o preço final
+                            comando.Parameters.AddWithValue("@preco_final", produto[1]); 
+                            comando.Parameters.AddWithValue("@horaVenda", hora);
 
-                            // Executa o comando
                             int linhasAfetadas = comando.ExecuteNonQuery();
 
-                            // Verifica se a inserção foi bem sucedida
                             if (linhasAfetadas > 0)
                             {
                                 MessageBox.Show("Venda bem sucedida!");
