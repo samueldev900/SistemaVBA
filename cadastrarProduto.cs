@@ -141,7 +141,7 @@ namespace SistemaVBA
         private void delete_button_Click(object sender, EventArgs e)
         {
             var conexao = new MySqlConnection(stringConnect);
-            var sqlQuery = "DELETE FROM produto WHERE id =" + idValue;
+            var sqlQuery = $"DELETE FROM produto WHERE id ={idValue}";
             using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
             {
                 comando.Parameters.AddWithValue("@IdValue", idValue);
@@ -167,30 +167,31 @@ namespace SistemaVBA
 
         private void edit_botton_Click(object sender, EventArgs e)
         {
-            var conexao = new MySqlConnection(stringConnect);
-            var sqlQuery = "UPDATE `cadastro`.`produto` SET `nome` = '" + ProdutoTextBox.Text + "', `marca` = '" + MarcaTextBox.Text + "', `preco_de_custo` = '" + costPriceTextBox.Text + "', `preco_final` = '" + finalPricetextBox.Text + "', `codigo_de_barras` = '" + IDtextBox.Text + "' WHERE id = " + idValue;
+            var sqlQuery = $"UPDATE produto SET nome='{ProdutoTextBox.Text}', marca='{MarcaTextBox.Text}', preco_de_custo={costPriceTextBox.Text}, preco_final={finalPricetextBox.Text}, codigo_de_barras='{IDtextBox.Text}' WHERE id={idValue}";
 
-            using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
+
+            using (MySqlConnection conexao = new MySqlConnection(stringConnect))
             {
-                try
+                using (MySqlCommand comando = new MySqlCommand(sqlQuery, conexao))
                 {
-                    conexao.Open();
-                    int rowsAffected = comando.ExecuteNonQuery();
-                    MessageBox.Show("Produto atualizado com Sucesso");
-                    atualizar();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Erro: " + ex.Message);
-                }
-                finally
-                {
-                    conexao.Close();
+                    try
+                    {
+                        conexao.Open();
+                        int rowsAffected = comando.ExecuteNonQuery();
+                        MessageBox.Show("Produto atualizado com Sucesso");
+                        atualizar();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Erro: " + ex.Message);
+                    }
+                    finally
+                    {
+                        conexao.Close();
+                    }
                 }
             }
-
         }
-
         private void atualizar()
         {
             DataTable table = new DataTable();
